@@ -40,7 +40,7 @@ router.delete('/usuarios/:id', async (req, res) => {
     if (!usuarioABorrar) res.status(200).send('Usuario no encontrado');
     else {
       await Usuario.destroy({ where: { usuario_id: id } });
-      res.status(200).json(usuarioABorrar);
+      res.status(200).json(`Usuario ${usuarioABorrar.nombre} ${usuarioABorrar.apellido} (${usuarioABorrar.email}) borrado con éxito.`);
     }
   } catch (error) {
     res.status(404).json(error);
@@ -52,7 +52,7 @@ router.put('/usuarios/:id', async (req, res) => {
     const { id } = req.params;
     const data = req.body;
     const usuario = await Usuario.findByPk(id);
-    
+
     await usuario.update(data)
     res.status(200).json(usuario);
   } catch (error) {
