@@ -16,7 +16,9 @@ config();
 // app.get('/', (req, res) => {
 //   res.send('jelou world');
 // });
-
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(cors());
 app.use('/', routes);
 
 // app.get('/ping', async (req, res) => {
