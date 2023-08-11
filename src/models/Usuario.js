@@ -42,7 +42,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       numero: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       localidad: {
         type: DataTypes.STRING,
