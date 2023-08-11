@@ -16,7 +16,8 @@
     "express": "^4.18.2",
     "morgan": "^1.10.0",
     "pg": "^8.11.1",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "zod": "3.21.4"
   },
   "devDependencies": {
     "nodemon": "2.0.22"
