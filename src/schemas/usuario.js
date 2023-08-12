@@ -34,3 +34,5 @@ function validarUsuario(object) {
 }
 
 module.exports = { validarUsuario };
+
+
