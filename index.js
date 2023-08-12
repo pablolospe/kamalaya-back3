@@ -8,7 +8,7 @@ const { conn } = require('./src/db/db.js');
 // app.listen(8000)
 // console.log(`server on port 8000`);
 
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
     app.listen(8000, () => {
       console.log(`Server running...`);
 
