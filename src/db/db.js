@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
@@ -50,5 +50,6 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 module.exports = {
   ...sequelize.models,
-  conn: sequelize,
+  conn: sequelize, 
+  Op
 };

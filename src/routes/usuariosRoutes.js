@@ -1,12 +1,29 @@
 const { Router } = require('express');
-const { Usuario } = require('../db/db');
+const { Usuario, Op } = require('../db/db');
 const { validarUsuario } = require('../schemas/usuario');
 
 const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const usuarios = await Usuario.findAll();
+    const { nombre, apellido, tieneAuto } = req.query;
+    
+    // Construct the filter object based on query parameters
+    const filter = {};
+    console.log(filter);
+    if (nombre) {
+      filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
+    }
+    if (apellido) {
+      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+    }
+    if (tieneAuto) {
+      filter.tieneAuto = { [Op.is]: true };
+    }
+    const usuarios = await Usuario.findAll({
+      where: filter,
+    });
+    
     res.status(200).json(usuarios);
   } catch (error) {
     res.status(404).json(error);
