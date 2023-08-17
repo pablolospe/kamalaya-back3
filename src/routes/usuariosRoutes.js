@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, tieneAuto } = req.query;
+    const { nombre, apellido, localidad, tieneAuto } = req.query;
     
     // Construct the filter object based on query parameters
     const filter = {};
@@ -16,6 +16,9 @@ router.get('/', async (req, res) => {
     }
     if (apellido) {
       filter.apellido = { [Op.iLike]: `%${apellido}%` };
+    }
+    if (localidad) {
+      filter.localidad = { [Op.iLike]: `%${localidad}%` };
     }
     if (tieneAuto) {
       filter.tieneAuto = { [Op.is]: true };
