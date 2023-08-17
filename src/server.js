@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const routes = require('./routes');
 const usuariosRoutes = require('./routes/usuariosRoutes');
+const disponibilidadRoutes = require('./routes/disponibilidadRoutes');
 const app = express();
 const { config } = require('dotenv');
 const pg = require('pg');
@@ -21,6 +22,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
 app.use('/usuarios', usuariosRoutes);
+app.use('/disponibilidad', disponibilidadRoutes);
 
 // app.get('/ping', async (req, res) => {
 //   const response = await db.query('SELECT NOW()');

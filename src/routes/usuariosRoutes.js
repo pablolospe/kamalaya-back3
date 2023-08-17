@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Usuario, Op } = require('../db/db');
+const { Usuario, Disponibilidades, Op } = require('../db/db');
 const { validarUsuario } = require('../schemas/usuario');
 
 const router = Router();
@@ -25,7 +25,15 @@ router.get('/', async (req, res) => {
     }
     const usuarios = await Usuario.findAll({
       where: filter,
+      include: Disponibilidades
     });
+    // const usuarios = await Usuario.findAll({
+    //   where: filter,
+    //   include: {
+    //     model: Disponibilidades,
+    //     where: { diaSemana: 'Lunes' }, // Filtro para las disponibilidades
+    //   },
+    // });
     
     res.status(200).json(usuarios);
   } catch (error) {
@@ -36,7 +44,9 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const usuario = await Usuario.findByPk(id);
+    const usuario = await Usuario.findByPk(id, {
+      include: Disponibilidades
+    });
     res.status(200).json(usuario);
   } catch (error) {
     res.status(404).json(error);

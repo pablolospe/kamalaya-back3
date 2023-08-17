@@ -12,7 +12,7 @@ const DiaSemanaEnum = {
 
 module.exports = (sequelize) => {
   sequelize.define(
-    'Disponibilidad',
+    'Disponibilidades',
     {
       disponibilidad_id: {
         type: DataTypes.INTEGER,
