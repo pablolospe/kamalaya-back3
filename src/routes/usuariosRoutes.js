@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, localidad, tieneAuto } = req.query;
+    const { nombre, apellido, localidad, tieneAuto, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
     
     // Construct the filter object based on query parameters
     const filter = {};
@@ -20,6 +20,12 @@ router.get('/', async (req, res) => {
     if (localidad) {
       filter.localidad = { [Op.iLike]: `%${localidad}%` };
     }
+    if (profesion_oficio_ocupacion) {
+      filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
+    }
+    if (hobbies_habilidades) {
+      filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
+    }
     if (tieneAuto) {
       filter.tieneAuto = { [Op.is]: true };
     }
@@ -27,13 +33,6 @@ router.get('/', async (req, res) => {
       where: filter,
       include: Disponibilidades
     });
-    // const usuarios = await Usuario.findAll({
-    //   where: filter,
-    //   include: {
-    //     model: Disponibilidades,
-    //     where: { diaSemana: 'Lunes' }, // Filtro para las disponibilidades
-    //   },
-    // });
     
     res.status(200).json(usuarios);
   } catch (error) {
