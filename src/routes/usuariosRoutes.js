@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Usuario, Disponibilidades, Op } = require('../db/db');
 const { validarUsuario } = require('../schemas/usuario');
+const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
 const router = Router();
 
@@ -52,24 +53,59 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// router.post('/', async (req, res) => {
+//   try {
+//     const result = validarUsuario(req.body);
+//     console.log(result.error);
+
+//     if (result.error) {
+//       return res.status(400).json({ error: JSON.parse(result.error) });
+//     }
+//     const nuevoUsuario = {
+//       ...result,
+//     };
+//     console.log(nuevoUsuario);
+//     Usuario.create(nuevoUsuario.data);
+//     res.status(200).json({ nuevoUsuario });
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
 router.post('/', async (req, res) => {
   try {
     const result = validarUsuario(req.body);
-    console.log(result.error);
+    console.log(req.body);
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
     }
+
     const nuevoUsuario = {
       ...result,
+    };    
+    // Crear el usuario y obtener su ID
+    const usuarioCreado = await Usuario.create(nuevoUsuario.data);
+    console.log('usuarioCreado.usuario_id: '+ usuarioCreado.usuario_id);
+
+    // Luego, usar el usuario_id para crear la disponibilidad
+    const result2 = validarDisponibilidad(req.body.Disponibilidades[0]);
+
+    const nuevaDisponibilidad = {
+      ...result2.data,
+      usuario_id: Number(usuarioCreado.usuario_id), // Asignar el usuario_id
     };
-    console.log(nuevoUsuario);
-    Usuario.create(nuevoUsuario.data);
-    res.status(200).json({ nuevoUsuario });
+
+    const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
+
+    await Disponibilidades.create(disponibilidadValidada.data);
+
+    res.status(200).json({ nuevoUsuario, nuevaDisponibilidad });
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
