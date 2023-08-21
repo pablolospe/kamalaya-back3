@@ -76,6 +76,7 @@ router.post('/', async (req, res) => {
   try {
     const result = validarUsuario(req.body);
     console.log(req.body);
+    const disponibilidades = req.body.Disponibilidades[0]
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
@@ -89,11 +90,11 @@ router.post('/', async (req, res) => {
     console.log('usuarioCreado.usuario_id: '+ usuarioCreado.usuario_id);
 
     // Luego, usar el usuario_id para crear la disponibilidad
-    const result2 = validarDisponibilidad(req.body.Disponibilidades[0]);
+    const result2 = validarDisponibilidad(disponibilidades);
 
     const nuevaDisponibilidad = {
-      ...result2.data,
       usuario_id: Number(usuarioCreado.usuario_id), // Asignar el usuario_id
+      ...result2.data,
     };
 
     const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
