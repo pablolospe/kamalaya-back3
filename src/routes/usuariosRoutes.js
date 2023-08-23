@@ -9,7 +9,6 @@ router.get('/', async (req, res) => {
   try {
     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
     
-    // Construct the filter object based on query parameters
     const filter = {};
     console.log(filter);
     if (nombre) {
@@ -28,10 +27,10 @@ router.get('/', async (req, res) => {
       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
     }
     if (tieneAuto !== undefined) {
-      filter.tieneAuto = tieneAuto === 'true'; // Convert string to boolean
+      filter.tieneAuto = tieneAuto === 'true' ? true : false;
     }
     if (experienciaCP !== undefined) {
-      filter.experienciaCP = experienciaCP === 'true'; // Convert string to boolean
+      filter.experienciaCP = experienciaCP === 'true' ? true : false;
     }
     const usuarios = await Usuario.findAll({
       where: filter,
