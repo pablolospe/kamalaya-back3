@@ -116,7 +116,7 @@ router.delete('/:id', async (req, res) => {
     const usuarioABorrar = await Usuario.findByPk(id);
     if (!usuarioABorrar) res.status(200).send('Usuario no encontrado');
     else {
-      await Usuario.destroy({ where: { usuario_id: id } });
+      await usuarioABorrar.destroy();
       res
         .status(200)
         .json(

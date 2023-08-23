@@ -23,62 +23,33 @@ router.post('/', async (req, res) => {
   }
 });
 
-// // router.get('/', async (req, res) => {
-// //   try {
-// //     const { nombre, apellido, localidad, tieneAuto } = req.query;
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const disponibilidadABorrar = await Disponibilidades.findByPk(id);
+    if (!disponibilidadABorrar) res.status(200).send('Disponibilidad horaria no encontrada');
+    else {
+      await disponibilidadABorrar.destroy();
+      res
+      .status(200)
+        .json(
+          `Disponibilidad horaria ${disponibilidadABorrar.disponibilidad_id} borrada con éxito.`
+          );
+        }
+      } catch (error) {
+        res.status(404).json(error);
+      }
+    });
     
-// //     // Construct the filter object based on query parameters
-// //     const filter = {};
-// //     console.log(filter);
-// //     if (nombre) {
-// //       filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
-// //     }
-// //     if (apellido) {
-// //       filter.apellido = { [Op.iLike]: `%${apellido}%` };
-// //     }
-// //     if (localidad) {
-// //       filter.localidad = { [Op.iLike]: `%${localidad}%` };
-// //     }
-// //     if (tieneAuto) {
-// //       filter.tieneAuto = { [Op.is]: true };
-// //     }
-// //     const usuarios = await Usuario.findAll({
-// //       where: filter,
-// //     });
-    
-// //     res.status(200).json(usuarios);
-// //   } catch (error) {
-// //     res.status(404).json(error);
-// //   }
-// // });
-
-// // router.get('/:id', async (req, res) => {
-// //   try {
-// //     const { id } = req.params;
-// //     const usuario = await Usuario.findByPk(id);
-// //     res.status(200).json(usuario);
-// //   } catch (error) {
-// //     res.status(404).json(error);
-// //   }
-// // });
-
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const usuarioABorrar = await Usuario.findByPk(id);
-//     if (!usuarioABorrar) res.status(200).send('Usuario no encontrado');
-//     else {
-//       await Usuario.destroy({ where: { usuario_id: id } });
-//       res
-//         .status(200)
-//         .json(
-//           `Usuario ${usuarioABorrar.nombre} ${usuarioABorrar.apellido} (${usuarioABorrar.email}) borrado con éxito.`
-//         );
-//     }
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
+    // // router.get('/:id', async (req, res) => {
+    // //   try {
+    // //     const { id } = req.params;
+    // //     const usuario = await Usuario.findByPk(id);
+    // //     res.status(200).json(usuario);
+    // //   } catch (error) {
+    // //     res.status(404).json(error);
+    // //   }
+    // // });
 
 // router.put('/:id', async (req, res) => {
 //   try {
