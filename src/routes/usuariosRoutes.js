@@ -26,10 +26,10 @@ router.get('/', async (req, res) => {
     if (hobbies_habilidades) {
       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
     }
-    if (tieneAuto !== undefined) {
+    if (tieneAuto && tieneAuto !== undefined) {
       filter.tieneAuto = tieneAuto === 'true' ? true : false;
     }
-    if (experienciaCP !== undefined) {
+    if (experienciaCP && experienciaCP !== undefined) {
       filter.experienciaCP = experienciaCP === 'true' ? true : false;
     }
     const usuarios = await Usuario.findAll({
