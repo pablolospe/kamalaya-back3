@@ -1,4 +1,5 @@
 module.exports = {
     usuariosRoutes: (require("./usuariosRoutes")),
-    disponibilidadRoutes: (require("./disponibilidadRoutes"))
+    disponibilidadRoutes: (require("./disponibilidadRoutes")),
+    antecedenteDeAcompaniamientoRoute: (require("./antecedenteDeAcompaniamientoRoute.js")),
 }

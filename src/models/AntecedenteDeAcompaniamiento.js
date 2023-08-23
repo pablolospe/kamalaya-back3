@@ -2,9 +2,9 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    'AntecedenteDeAcompañamiento',
+    'AntecedenteDeAcompaniamiento',
     {
-      antecedente_acompañamiento_id: {
+      antecedente_acompaniamiento_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true

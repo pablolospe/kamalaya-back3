@@ -4,6 +4,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const usuariosRoutes = require('./routes/usuariosRoutes');
 const disponibilidadRoutes = require('./routes/disponibilidadRoutes');
+const antecedenteDeAcompaniamientoRoute = require('./routes/antecedenteDeAcompaniamientoRoute.js');
 const app = express();
 const { config } = require('dotenv');
 const pg = require('pg');
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/usuarios', usuariosRoutes);
 app.use('/disponibilidad', disponibilidadRoutes);
+app.use('/acompaniamiento', antecedenteDeAcompaniamientoRoute);
 
 // app.get('/ping', async (req, res) => {
 //   const response = await db.query('SELECT NOW()');

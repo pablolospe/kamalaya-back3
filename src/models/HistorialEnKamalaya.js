@@ -9,10 +9,10 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      paciente: {
-        type: DataTypes.STRING,
-        // allowNull: false
-      },
+      // paciente_id: {
+      //   type: DataTypes.STRING,
+      //   // allowNull: false
+      // },
       fechaInicio: {
         type: DataTypes.DATEONLY,
         // allowNull: false

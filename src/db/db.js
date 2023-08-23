@@ -46,10 +46,15 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Usuario, Disponibilidades } = sequelize.models;
+const { Usuario, Disponibilidades, HistorialEnKamalaya, AntecedenteDeAcompaniamiento } = sequelize.models;
 
 Usuario.hasMany(Disponibilidades, { foreignKey: 'usuario_id' })
 Disponibilidades.belongsTo(Usuario, { foreignKey: 'usuario_id' })
+
+Usuario.hasMany(AntecedenteDeAcompaniamiento, { foreignKey: 'usuario_id' })
+AntecedenteDeAcompaniamiento.belongsTo(Usuario, { foreignKey: 'usuario_id' })
+
+
 
 module.exports = {
   ...sequelize.models,
