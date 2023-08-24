@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize');
 
 const DiaSemanaEnum = {
-  LUNES: 'Lunes',
-  MARTES: 'Martes',
-  MIERCOLES: 'Miércoles',
-  JUEVES: 'Jueves',
-  VIERNES: 'Viernes',
-  SABADO: 'Sábado',
-  DOMINGO: 'Domingo',
+  LUNES: 'lunes',
+  MARTES: 'martes',
+  MIERCOLES: 'miercoles',
+  JUEVES: 'jueves',
+  VIERNES: 'viernes',
+  SABADO: 'sabado',
+  DOMINGO: 'domingo',
 };
 
 module.exports = (sequelize) => {

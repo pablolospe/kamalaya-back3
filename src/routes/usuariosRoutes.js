@@ -5,43 +5,43 @@ const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-  try {
-    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
+// router.get('/', async (req, res) => {
+//   try {
+//     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
     
-    const filter = {};
-    console.log(filter);
-    if (nombre) {
-      filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
-    }
-    if (apellido) {
-      filter.apellido = { [Op.iLike]: `%${apellido}%` };
-    }
-    if (localidad) {
-      filter.localidad = { [Op.iLike]: `%${localidad}%` };
-    }
-    if (profesion_oficio_ocupacion) {
-      filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
-    }
-    if (hobbies_habilidades) {
-      filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
-    }
-    if (tieneAuto && tieneAuto !== undefined) {
-      filter.tieneAuto = tieneAuto === 'true' ? true : false;
-    }
-    if (experienciaCP && experienciaCP !== undefined) {
-      filter.experienciaCP = experienciaCP === 'true' ? true : false;
-    }
-    const usuarios = await Usuario.findAll({
-      where: filter,
-      include: Disponibilidades
-    });
+//     const filter = {};
+//     console.log(filter);
+//     if (nombre) {
+//       filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
+//     }
+//     if (apellido) {
+//       filter.apellido = { [Op.iLike]: `%${apellido}%` };
+//     }
+//     if (localidad) {
+//       filter.localidad = { [Op.iLike]: `%${localidad}%` };
+//     }
+//     if (profesion_oficio_ocupacion) {
+//       filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
+//     }
+//     if (hobbies_habilidades) {
+//       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
+//     }
+//     if (tieneAuto && tieneAuto !== undefined) {
+//       filter.tieneAuto = tieneAuto === 'true' ? true : false;
+//     }
+//     if (experienciaCP && experienciaCP !== undefined) {
+//       filter.experienciaCP = experienciaCP === 'true' ? true : false;
+//     }
+//     const usuarios = await Usuario.findAll({
+//       where: filter,
+//       include: Disponibilidades
+//     });
     
-    res.status(200).json(usuarios);
-  } catch (error) {
-    res.status(404).json(error);
-  }
-});
+//     res.status(200).json(usuarios);
+//   } catch (error) {
+//     res.status(404).json(error);
+//   }
+// });
 
 router.get('/:id', async (req, res) => {
   try {
@@ -146,60 +146,61 @@ router.put('/:id', async (req, res) => {
 module.exports = router;
 
 
+router.get('/', async (req, res) => {
+  try {
+    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
+    
+    console.log(diaSemana);
+    
+    const filter = {};
 
+    if (nombre) {
+      filter.nombre = { [Op.iLike]: `%${nombre}%` };
+    }
+    if (apellido) {
+      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+    }
+    if (localidad) {
+      filter.localidad = { [Op.iLike]: `%${localidad}%` };
+    }
+    if (profesion_oficio_ocupacion) {
+      filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
+    }
+    if (hobbies_habilidades) {
+      filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
+    }
+    if (tieneAuto !== undefined) {
+      filter.tieneAuto = tieneAuto === 'true';
+    }
+    if (experienciaCP !== undefined) {
+      filter.experienciaCP = experienciaCP === 'true';
+    }
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
+    let usuarios;
 
-//     const filter = {};
-
-//     if (nombre) {
-//       filter.nombre = { [Op.iLike]: `%${nombre}%` };
-//     }
-//     if (apellido) {
-//       filter.apellido = { [Op.iLike]: `%${apellido}%` };
-//     }
-//     if (localidad) {
-//       filter.localidad = { [Op.iLike]: `%${localidad}%` };
-//     }
-//     if (profesion_oficio_ocupacion) {
-//       filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
-//     }
-//     if (hobbies_habilidades) {
-//       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
-//     }
-//     if (tieneAuto !== undefined) {
-//       filter.tieneAuto = tieneAuto === 'true';
-//     }
-//     if (experienciaCP !== undefined) {
-//       filter.experienciaCP = experienciaCP === 'true';
-//     }
-
-//     let usuarios;
-
-//     if (diaSemana) {
-//       const diaSemanaArray = Array.isArray(diaSemana) ? diaSemana : [diaSemana];
+    if (diaSemana && diaSemana[0]) {
+      const diaSemanaArray = Array.isArray(diaSemana) ? diaSemana : [diaSemana];
       
-//       usuarios = await Usuario.findAll({
-//         where: filter,
-//         include: [
-//           {
-//             model: Disponibilidades,
-//             where: {
-//               diaSemana: diaSemanaArray
-//             }
-//           }
-//         ]
-//       });
-//     } else {
-//       usuarios = await Usuario.findAll({
-//         where: filter
-//       });
-//     }
+      usuarios = await Usuario.findAll({
+        where: filter,
+        include: [
+          {
+            model: Disponibilidades,
+            where: {
+              diaSemana: diaSemanaArray
+            }
+          }
+        ]
+      });
+    } else {
+      usuarios = await Usuario.findAll({
+        where: filter,
+        include: Disponibilidades,
+      });
+    }
 
-//     res.status(200).json(usuarios);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
+    res.status(200).json(usuarios);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});

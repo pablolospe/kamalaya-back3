@@ -1,7 +1,7 @@
 const z = require('zod');
 
 const disponibilidadSchema = z.object({
-  diaSemana: z.enum(['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Sábado', 'Domingo']),
+  diaSemana: z.enum(['lunes', 'martes', 'miercoles', 'jueves', 'sabado', 'domingo']),
   horaInicio: z.string(),
   horaFin: z.string(),
   usuario_id: z.any(),
