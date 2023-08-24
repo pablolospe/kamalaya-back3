@@ -7,12 +7,12 @@ const router = Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
-    
+    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
+
     const filter = {};
-    console.log(filter);
+
     if (nombre) {
-      filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
+      filter.nombre = { [Op.iLike]: `%${nombre}%` };
     }
     if (apellido) {
       filter.apellido = { [Op.iLike]: `%${apellido}%` };
@@ -26,17 +26,35 @@ router.get('/', async (req, res) => {
     if (hobbies_habilidades) {
       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
     }
-    if (tieneAuto && tieneAuto !== undefined) {
-      filter.tieneAuto = tieneAuto === 'true' ? true : false;
+    if (tieneAuto !== undefined) {
+      filter.tieneAuto = tieneAuto === 'true';
     }
-    if (experienciaCP && experienciaCP !== undefined) {
-      filter.experienciaCP = experienciaCP === 'true' ? true : false;
+    if (experienciaCP !== undefined) {
+      filter.experienciaCP = experienciaCP === 'true';
     }
-    const usuarios = await Usuario.findAll({
-      where: filter,
-      include: Disponibilidades
-    });
-    
+
+    let usuarios;
+
+    if (diaSemana) {
+      const diaSemanaArray = Array.isArray(diaSemana) ? diaSemana : [diaSemana];
+      
+      usuarios = await Usuario.findAll({
+        where: filter,
+        include: [
+          {
+            model: Disponibilidades,
+            where: {
+              diaSemana: diaSemanaArray
+            }
+          }
+        ]
+      });
+    } else {
+      usuarios = await Usuario.findAll({
+        where: filter
+      });
+    }
+
     res.status(200).json(usuarios);
   } catch (error) {
     res.status(404).json(error);
