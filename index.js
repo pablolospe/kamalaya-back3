@@ -1,14 +1,8 @@
-// const express = require('express');
-// const app = express()
-// require('dotenv').config();
-const { Usuario } = require("./src/db/db")
 const app = require('./src/server')
 const { conn } = require('./src/db/db.js');
+const { Usuario } = require("./src/db/db")
 
-// app.listen(8000)
-// console.log(`server on port 8000`);
-
-conn.sync().then(() => {
+conn.sync({force:true}).then(() => {
     app.listen(8000, () => {
       console.log(`Server running...`);
 
