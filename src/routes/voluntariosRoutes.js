@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { Usuario, Disponibilidades, AntecedenteDeAcompaniamiento, Op } = require('../db/db');
-const { validarUsuario } = require('../schemas/usuario');
+const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, Op } = require('../db/db');
+const { validarVoluntario } = require('../schemas/voluntario');
 const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
 const router = Router();
@@ -32,12 +32,12 @@ const router = Router();
 //     if (experienciaCP && experienciaCP !== undefined) {
 //       filter.experienciaCP = experienciaCP === 'true' ? true : false;
 //     }
-//     const usuarios = await Usuario.findAll({
+//     const voluntarios = await Voluntario.findAll({
 //       where: filter,
 //       include: Disponibilidades
 //     });
     
-//     res.status(200).json(usuarios);
+//     res.status(200).json(voluntarios);
 //   } catch (error) {
 //     res.status(404).json(error);
 //   }
@@ -46,12 +46,12 @@ const router = Router();
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const usuario = await Usuario.findByPk(id, {
+    const voluntario = await Voluntario.findByPk(id, {
       include: [ Disponibilidades, AntecedenteDeAcompaniamiento],
     }, 
     
     );
-    res.status(200).json(usuario);
+    res.status(200).json(voluntario);
   } catch (error) {
     res.status(404).json(error);
   }
@@ -59,18 +59,18 @@ router.get('/:id', async (req, res) => {
 
 // router.post('/', async (req, res) => {
 //   try {
-//     const result = validarUsuario(req.body);
+//     const result = validarVoluntario(req.body);
 //     console.log(result.error);
 
 //     if (result.error) {
 //       return res.status(400).json({ error: JSON.parse(result.error) });
 //     }
-//     const nuevoUsuario = {
+//     const nuevoVoluntario = {
 //       ...result,
 //     };
-//     console.log(nuevoUsuario);
-//     Usuario.create(nuevoUsuario.data);
-//     res.status(200).json({ nuevoUsuario });
+//     console.log(nuevoVoluntario);
+//     Voluntario.create(nuevoVoluntario.data);
+//     res.status(200).json({ nuevoVoluntario });
 //   } catch (error) {
 //     res.status(500).json(error);
 //   }
@@ -78,7 +78,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const result = validarUsuario(req.body);
+    const result = validarVoluntario(req.body);
     console.log(req.body);
     const disponibilidades = req.body.Disponibilidades[0]
 
@@ -86,18 +86,18 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: JSON.parse(result.error) });
     }
 
-    const nuevoUsuario = {
+    const nuevoVoluntario = {
       ...result,
     };    
-    // Crear el usuario y obtener su ID
-    const usuarioCreado = await Usuario.create(nuevoUsuario.data);
-    console.log('usuarioCreado.usuario_id: '+ usuarioCreado.usuario_id);
+    // Crear el voluntario y obtener su ID
+    const voluntarioCreado = await Voluntario.create(nuevoVoluntario.data);
+    console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
 
-    // Luego, usar el usuario_id para crear la disponibilidad
+    // Luego, usar el voluntario_id para crear la disponibilidad
     const result2 = validarDisponibilidad(disponibilidades);
 
     const nuevaDisponibilidad = {
-      usuario_id: Number(usuarioCreado.usuario_id), // Asignar el usuario_id
+      voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
       ...result2.data,
     };
 
@@ -105,7 +105,7 @@ router.post('/', async (req, res) => {
 
     await Disponibilidades.create(disponibilidadValidada.data);
 
-    res.status(200).json({ nuevoUsuario, nuevaDisponibilidad });
+    res.status(200).json({ nuevoVoluntario, nuevaDisponibilidad });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -115,14 +115,14 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const usuarioABorrar = await Usuario.findByPk(id);
-    if (!usuarioABorrar) res.status(200).send('Usuario no encontrado');
+    const voluntarioABorrar = await Voluntario.findByPk(id);
+    if (!voluntarioABorrar) res.status(200).send('Voluntario no encontrado');
     else {
-      await usuarioABorrar.destroy();
+      await voluntarioABorrar.destroy();
       res
         .status(200)
         .json(
-          `Usuario ${usuarioABorrar.nombre} ${usuarioABorrar.apellido} (${usuarioABorrar.email}) borrado con éxito.`
+          `Voluntario ${voluntarioABorrar.nombre} ${voluntarioABorrar.apellido} (${voluntarioABorrar.email}) borrado con éxito.`
         );
     }
   } catch (error) {
@@ -134,16 +134,15 @@ router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
-    const usuario = await Usuario.findByPk(id);
+    const voluntario = await Voluntario.findByPk(id);
 
-    await usuario.update(data);
-    res.status(200).json(usuario);
+    await voluntario.update(data);
+    res.status(200).json(voluntario);
   } catch (error) {
     res.status(404).json(error);
   }
 });
 
-module.exports = router;
 
 
 router.get('/', async (req, res) => {
@@ -153,7 +152,7 @@ router.get('/', async (req, res) => {
     console.log(diaSemana);
     
     const filter = {};
-
+    
     if (nombre) {
       filter.nombre = { [Op.iLike]: `%${nombre}%` };
     }
@@ -175,13 +174,13 @@ router.get('/', async (req, res) => {
     if (experienciaCP !== undefined) {
       filter.experienciaCP = experienciaCP === 'true';
     }
-
-    let usuarios;
-
+    
+    let voluntarios;
+    
     if (diaSemana && diaSemana[0]) {
       const diaSemanaArray = Array.isArray(diaSemana) ? diaSemana : [diaSemana];
       
-      usuarios = await Usuario.findAll({
+      voluntarios = await Voluntario.findAll({
         where: filter,
         include: [
           {
@@ -193,14 +192,17 @@ router.get('/', async (req, res) => {
         ]
       });
     } else {
-      usuarios = await Usuario.findAll({
+      voluntarios = await Voluntario.findAll({
         where: filter,
         include: Disponibilidades,
       });
     }
 
-    res.status(200).json(usuarios);
+    res.status(200).json(voluntarios);
   } catch (error) {
     res.status(404).json(error);
   }
 });
+
+
+module.exports = router;

@@ -6,7 +6,7 @@ const antecedentesDeAcompaniamientoSchema = z.object({
   fechaInicio: z.coerce.date(),
   fechaFin: z.coerce.date(),
   detalles: z.string(),
-  usuario_id: z.any(),
+  voluntario_id: z.any(),
 });
 
 function validarAntecedentesDeAcompaniamiento(object) {

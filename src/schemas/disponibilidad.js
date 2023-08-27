@@ -4,7 +4,7 @@ const disponibilidadSchema = z.object({
   diaSemana: z.enum(['lunes', 'martes', 'miercoles', 'jueves', 'sabado', 'domingo']),
   horaInicio: z.string(),
   horaFin: z.string(),
-  usuario_id: z.any(),
+  voluntario_id: z.any(),
 });
 
 function validarDisponibilidad(object) {

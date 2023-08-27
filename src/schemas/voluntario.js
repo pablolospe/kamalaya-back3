@@ -1,6 +1,6 @@
 const z = require('zod');
 
-const usuarioSchema = z.object({
+const voluntarioSchema = z.object({
   nombre: z.string({
     invalid_type_error: 'Nombre debe ser un string',
   }),
@@ -29,10 +29,10 @@ const usuarioSchema = z.object({
   experienciaCP: z.boolean(),
 });
 
-function validarUsuario(object) {
-  return usuarioSchema.safeParse(object);
+function validarVoluntario(object) {
+  return voluntarioSchema.safeParse(object);
 }
 
-module.exports = { validarUsuario };
+module.exports = { validarVoluntario };
 
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const {usuariosRoutes, disponibilidadRoutes, antecedenteDeAcompaniamientoRoute, login, signin } = require('./routes');
+const {voluntariosRoutes, disponibilidadRoutes, antecedenteDeAcompaniamientoRoute, login, signin } = require('./routes');
 // const disponibilidadRoutes = require('./routes/disponibilidadRoutes');
 // const antecedenteDeAcompaniamientoRoute = require('./routes/antecedenteDeAcompaniamientoRoute.js');
 const app = express();
@@ -13,7 +13,7 @@ config();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
-app.use('/usuarios', usuariosRoutes);
+app.use('/voluntarios', voluntariosRoutes);
 app.use('/login', login);
 app.use('/signin', signin);
 app.use('/disponibilidad', disponibilidadRoutes);

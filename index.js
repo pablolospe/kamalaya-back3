@@ -1,12 +1,12 @@
 const app = require('./src/server')
 const { conn } = require('./src/db/db.js');
-const { Usuario, User } = require("./src/db/db");
+const { Voluntario, User } = require("./src/db/db");
 
 conn.sync().then(() => {
     app.listen(8000, () => {
       console.log(`Server running...`);
 
-      // const usuario = [
+      // const voluntario = [
       //   { nombre:"Nico", apellido:"Marra", email: "marra@s.com",telefonoEmergencia: "66666666", nombreContactoEmergencia: "Roberto Enfermero", profesion_oficio_ocupacion:"Doctor, especialidad: cardiología", hobbies_habilidades:"electricista", dni: 34567890, genero: "M", fechaDeNacimiento: "1984-11-07", fechaAlta: "2020-06-21", fechaBaja: "2025-06-21", tieneAuto: true, calle: "Sucre", numero: 1234, localidad: "Boulogne", provincia: "Buenos Aires", pais: "Argentina", codigoPostal: "1625", telefono: "1232345", telefono2: "1232345", experienciaCP: true },
       //   { nombre: "Pablo", apellido: "Lospennato", email: "yosoypxl@gmail.com", profesion_oficio_ocupacion:"Doctor, especialidad: cardiología", hobbies_habilidades:"electricista", dni: 34567890, genero: "M", fechaDeNacimiento: "1984-11-07", fechaAlta: "2020-06-21", fechaBaja: "2025-06-21", tieneAuto: true, calle: "Sucre", numero: 1234, localidad: "Boulogne", provincia: "Buenos Aires", pais: "Argentina", codigoPostal: "1625", telefono: "1232345", telefono2: "1232345", experienciaCP: true },
       //   ]
@@ -17,7 +17,7 @@ conn.sync().then(() => {
       //   }
       // ]
 
-      //   Usuario.bulkCreate(usuario).then(() => console.log("Usuarios cargados"));
+      //   Voluntario.bulkCreate(voluntario).then(() => console.log("Voluntarios cargados"));
       //   User.bulkCreate(user).then(() => console.log("User cargado"));
 
 })})

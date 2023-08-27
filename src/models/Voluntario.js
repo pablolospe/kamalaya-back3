@@ -8,9 +8,9 @@ const generos = {
 module.exports = (sequelize) => {
 
   sequelize.define(
-    'Usuario',
+    'Voluntario',
     {
-      usuario_id: {
+      voluntario_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
