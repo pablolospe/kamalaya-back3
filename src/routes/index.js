@@ -1,7 +1,8 @@
 module.exports = {
     voluntariosRoutes: (require("./voluntariosRoutes")),
     disponibilidadRoutes: (require("./disponibilidadRoutes")),
-    antecedenteDeAcompaniamientoRoute: (require("./antecedenteDeAcompaniamientoRoute.js")),
+    antecedenteDeAcompaniamientoRoutes: (require("./antecedenteDeAcompaniamientoRoutes")),
+    antecedentePatologicoRoutes: (require("./antecedentePatologicoRoutes")),
     login: (require("./login")),
     signin: (require("./signin")),
 }

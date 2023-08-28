@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const {voluntariosRoutes, disponibilidadRoutes, antecedenteDeAcompaniamientoRoute, login, signin } = require('./routes');
+const {voluntariosRoutes, disponibilidadRoutes, antecedenteDeAcompaniamientoRoutes, antecedentePatologicoRoutes, login, signin } = require('./routes');
 // const disponibilidadRoutes = require('./routes/disponibilidadRoutes');
 // const antecedenteDeAcompaniamientoRoute = require('./routes/antecedenteDeAcompaniamientoRoute.js');
 const app = express();
@@ -17,6 +17,7 @@ app.use('/voluntarios', voluntariosRoutes);
 app.use('/login', login);
 app.use('/signin', signin);
 app.use('/disponibilidad', disponibilidadRoutes);
-app.use('/acompaniamiento', antecedenteDeAcompaniamientoRoute);
+app.use('/acompaniamiento', antecedenteDeAcompaniamientoRoutes);
+app.use('/patologias', antecedentePatologicoRoutes);
 
 module.exports = app;
