@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, Op } = require('../db/db');
+const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Op } = require('../db/db');
 const { validarVoluntario } = require('../schemas/voluntario');
 const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const voluntario = await Voluntario.findByPk(id, {
-      include: [ Disponibilidades, AntecedenteDeAcompaniamiento],
+      include: [ Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico],
     }, 
     
     );
