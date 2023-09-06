@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Disponibilidades, Usuario } = require('../db/db');
+const { Disponibilidades, Paciente } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
 
 const router = Router();
@@ -16,40 +16,49 @@ router.post('/', async (req, res) => {
       ...result,
     };
     console.log(nuevoPaciente);
-    Disponibilidades.create(nuevoPaciente.data);
+    Paciente.create(nuevoPaciente.data);
     res.status(200).json({ nuevoPaciente });
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const disponibilidadABorrar = await Disponibilidades.findByPk(id);
-//     if (!disponibilidadABorrar) res.status(200).send('Disponibilidad horaria no encontrada');
-//     else {
-//       await disponibilidadABorrar.destroy();
-//       res
-//       .status(200)
-//         .json(
-//           `Disponibilidad horaria ${disponibilidadABorrar.disponibilidad_id} borrada con éxito.`
-//           );
-//         }
-//       } catch (error) {
-//         res.status(404).json(error);
-//       }
-//     });
+router.get('/', async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll();
+    res.status(200).json(pacientes);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
     
-//     // // router.get('/:id', async (req, res) => {
-//     // //   try {
-//     // //     const { id } = req.params;
-//     // //     const usuario = await Usuario.findByPk(id);
-//     // //     res.status(200).json(usuario);
-//     // //   } catch (error) {
-//     // //     res.status(404).json(error);
-//     // //   }
-//     // // });
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const paciente = await Paciente.findByPk(id);
+    res.status(200).json(paciente);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const pacienteABorrar = await Paciente.findByPk(id);
+    if (!pacienteABorrar) res.status(200).send('Voluntario no encontrado');
+    else {
+      await pacienteABorrar.destroy();
+      res
+        .status(200)
+        .json(
+          `Paciente ${pacienteABorrar.nombre} ${pacienteABorrar.apellido} (${pacienteABorrar.email}) borrado/a con éxito.`
+        );
+    }
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 // // router.put('/:id', async (req, res) => {
 // //   try {
