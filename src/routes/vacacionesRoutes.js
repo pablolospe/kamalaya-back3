@@ -27,13 +27,13 @@ router.delete('/:id', async (req, res) => {
   try {
     const vacacionesABorrar = await Vacaciones.findByPk(id);
     if (!vacacionesABorrar)
-      res.status(200).send('Disponibilidad horaria no encontrada');
+      res.status(200).send('Vacaciones no encontradas');
     else {
       await vacacionesABorrar.destroy();
       res
         .status(200)
         .json(
-          `Disponibilidad horaria ${vacacionesABorrar.disponibilidad_id} borrada con éxito.`
+          `Vacaciones ${vacacionesABorrar.disponibilidad_id} borradas con éxito.`
         );
     }
   } catch (error) {
