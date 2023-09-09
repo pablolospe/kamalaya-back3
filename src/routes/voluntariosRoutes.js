@@ -1,53 +1,15 @@
 const { Router } = require('express');
-const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Op } = require('../db/db');
+const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Op } = require('../db/db');
 const { validarVoluntario } = require('../schemas/voluntario');
 const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
 const router = Router();
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades } = req.query;
-    
-//     const filter = {};
-//     console.log(filter);
-//     if (nombre) {
-//       filter.nombre = { [Op.iLike]: `%${nombre}%` }; // Case-insensitive search
-//     }
-//     if (apellido) {
-//       filter.apellido = { [Op.iLike]: `%${apellido}%` };
-//     }
-//     if (localidad) {
-//       filter.localidad = { [Op.iLike]: `%${localidad}%` };
-//     }
-//     if (profesion_oficio_ocupacion) {
-//       filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
-//     }
-//     if (hobbies_habilidades) {
-//       filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
-//     }
-//     if (tieneAuto && tieneAuto !== undefined) {
-//       filter.tieneAuto = tieneAuto === 'true' ? true : false;
-//     }
-//     if (experienciaCP && experienciaCP !== undefined) {
-//       filter.experienciaCP = experienciaCP === 'true' ? true : false;
-//     }
-//     const voluntarios = await Voluntario.findAll({
-//       where: filter,
-//       include: Disponibilidades
-//     });
-    
-//     res.status(200).json(voluntarios);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
-
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const voluntario = await Voluntario.findByPk(id, {
-      include: [ Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico],
+      include: [ Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones],
     }, 
     
     );
@@ -56,25 +18,6 @@ router.get('/:id', async (req, res) => {
     res.status(404).json(error);
   }
 });
-
-// router.post('/', async (req, res) => {
-//   try {
-//     const result = validarVoluntario(req.body);
-//     console.log(result.error);
-
-//     if (result.error) {
-//       return res.status(400).json({ error: JSON.parse(result.error) });
-//     }
-//     const nuevoVoluntario = {
-//       ...result,
-//     };
-//     console.log(nuevoVoluntario);
-//     Voluntario.create(nuevoVoluntario.data);
-//     res.status(200).json({ nuevoVoluntario });
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
 
 router.post('/', async (req, res) => {
   try {
