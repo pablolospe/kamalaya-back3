@@ -136,7 +136,7 @@ router.get('/', async (req, res) => {
     } else {
       voluntarios = await Voluntario.findAll({
         where: filter,
-        include: Disponibilidades,
+        include: [ Disponibilidades, Vacaciones ]
       });
     }
 
