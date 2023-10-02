@@ -8,6 +8,8 @@ const pacienteSchema = z.object({
   dni: z.string(),
   email: z.string({ required_error: 'El email es requerido' }),
   telefono: z.string(),
+  lat: z.string(),
+  lng: z.string(),
   calle: z.string(),
   numero: z.string(),
   localidad: z.string(),
