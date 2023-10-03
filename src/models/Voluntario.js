@@ -60,9 +60,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         // allowNull: false,
       },
-      rol_usuario: {
-        type: DataTypes.STRING,
-      },
       telefonoEmergencia: {
         type: DataTypes.STRING,
       },

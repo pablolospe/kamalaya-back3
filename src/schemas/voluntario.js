@@ -16,7 +16,6 @@ const voluntarioSchema = z.object({
   provincia: z.string(),
   pais: z.string(),
   codigoPostal: z.string(),
-  rol_usuario: z.string(),
   telefonoEmergencia: z.string(),
   nombreContactoEmergencia: z.string(),
   genero: z.enum(['M', 'F', 'otro']),
