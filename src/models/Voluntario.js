@@ -56,10 +56,6 @@ module.exports = (sequelize) => {
       codigoPostal: {
         type: DataTypes.STRING,
       },
-      hashPassword: {
-        type: DataTypes.STRING,
-        // allowNull: false,
-      },
       telefonoEmergencia: {
         type: DataTypes.STRING,
       },
