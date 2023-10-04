@@ -38,6 +38,12 @@ module.exports = (sequelize) => {
       telefono2: {
         type: DataTypes.STRING,
       },
+      lat: {
+        type: DataTypes.STRING,
+      },
+      lng: {
+        type: DataTypes.STRING,
+      },
       calle: {
         type: DataTypes.STRING,
       },

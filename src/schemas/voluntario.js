@@ -14,6 +14,8 @@ const voluntarioSchema = z.object({
   numero: z.string(),
   localidad: z.string(),
   provincia: z.string(),
+  lat: z.string(),
+  lng: z.string(),
   pais: z.string(),
   codigoPostal: z.string(),
   telefonoEmergencia: z.string(),
