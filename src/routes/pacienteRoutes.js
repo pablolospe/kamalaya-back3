@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Disponibilidades, Paciente } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
+const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
