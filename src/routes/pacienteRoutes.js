@@ -61,17 +61,23 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// // router.put('/:id', async (req, res) => {
-// //   try {
-// //     const { id } = req.params;
-// //     const data = req.body;
-// //     const usuario = await Usuario.findByPk(id);
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const pacienteAActualizar = await Paciente.findByPk(id);
 
-// //     await usuario.update(data);
-// //     res.status(200).json(usuario);
-// //   } catch (error) {
-// //     res.status(404).json(error);
-// //   }
-// // });
+    const result = validarPaciente(req.body);
+
+    if (result.error) {
+      return res.status(400).json({ error: JSON.parse(result.error) });
+    }
+    
+    await pacienteAActualizar.update(result.data);
+    res.status(200).json({ message: 'Paciente actualizado con éxito', paciente: pacienteAActualizar });
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 module.exports = router;
