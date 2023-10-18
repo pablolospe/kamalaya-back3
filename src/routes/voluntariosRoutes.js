@@ -72,20 +72,38 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+// router.put('/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const data = req.body;
+//     const voluntario = await Voluntario.findByPk(id);
+
+//     await voluntario.update(data);
+//     res.status(200).json(voluntario);
+//   } catch (error) {
+//     res.status(404).json(error);
+//   }
+// });
+
+
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const data = req.body;
-    const voluntario = await Voluntario.findByPk(id);
+    console.log(id);
+    const voluntarioAActualizar = await Voluntario.findByPk(id);
 
-    await voluntario.update(data);
-    res.status(200).json(voluntario);
+    const result = validarVoluntario(req.body);
+
+    if (result.error) {
+      return res.status(400).json({ error: JSON.parse(result.error) });
+    }
+    
+    await voluntarioAActualizar.update(result.data);
+    res.status(200).json({ message: 'Voluntario actualizado con éxito', voluntario: voluntarioAActualizar });
   } catch (error) {
     res.status(404).json(error);
   }
 });
-
-
 
 router.get('/', async (req, res) => {
   try {

@@ -5,7 +5,6 @@ const voluntarioSchema = z.object({
     invalid_type_error: 'Nombre debe ser un string',
   }),
   apellido: z.string(),
-  // dni: z.number().int().positive(),
   dni: z.string(),
   email: z.string({ required_error: 'El email es requerido' }),
   telefono: z.string(),
