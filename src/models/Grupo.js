@@ -10,6 +10,9 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      descripcion: {
+        type: DataTypes.STRING,
+      },
       diaSemana: {
         type: DataTypes.ENUM(Object.values(diaSemana)),
         // allowNull: false

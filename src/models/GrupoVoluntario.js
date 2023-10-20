@@ -25,11 +25,9 @@ module.exports = (sequelize) => {
     {
       grupo_id: {
         type: DataTypes.INTEGER,
-        
       },
       voluntario_id: {
         type: DataTypes.INTEGER,
-        
       },
     },
     {

@@ -1,29 +1,41 @@
 const { Router } = require('express');
 const { Voluntario, Paciente, Grupo, GrupoVoluntario } = require('../db/db');
-const { validarGrupo } = require('../schemas/grupo');
+const { validarGrupo } = require('../schemas/grupo')
 
 const router = Router();
 
 // Ruta para crear un grupo y asociar un paciente existente
 router.post('/', async (req, res) => {
   try {
-    const { diaSemana, fechaDeInicio, horaInicio, horaFin, paciente_id, voluntario_id } = req.body;
+    const { diaSemana, fechaDeInicio, horaInicio, horaFin, paciente_id, voluntario_id, descripcion } = req.body;
+    const result = validarGrupo(req.body)
+    // const { diaSemana, fechaDeInicio, horaInicio, horaFin, paciente_id, voluntario_id, descripcion } = data.data;
+    // console.log(data);
 
-    // Busca el paciente existente por su ID
+    if (result.error) {
+      return res.status(400).json({ error: JSON.parse(result.error) });
+    }
+
+    const nuevoGrupo = {
+      ...result,
+    };    
+
     const pacienteExistente = await Paciente.findByPk(paciente_id);
 
     if (!pacienteExistente) {
       return res.status(404).json({ error: 'Paciente no encontrado' });
     }
 
-    // Crea un nuevo grupo y asócialo con el paciente
-    const nuevoGrupo = await Grupo.create({
-      diaSemana, 
-      fechaDeInicio,
-      horaInicio,
-      horaFin,
-      paciente_id
-    });
+    const grupo = await Grupo.create(nuevoGrupo.data)
+    
+    // const nuevoGrupo = await Grupo.create({
+    //   diaSemana, 
+    //   fechaDeInicio,
+    //   horaInicio,
+    //   horaFin,
+    //   paciente_id,
+    //   descripcion
+    // });
     // await nuevoGrupo.addPaciente(pacienteExistente);
 
     if (voluntario_id && Array.isArray(voluntario_id)) {
@@ -31,8 +43,9 @@ router.post('/', async (req, res) => {
         const voluntario = await Voluntario.findByPk(idVoluntario);
         if (voluntario) {
           // Crea una entrada en la tabla GrupoVoluntario para asociar el grupo y el voluntario
+          console.log('aidi'+grupo.grupo_id);
           await GrupoVoluntario.create({
-            grupo_id: nuevoGrupo.grupo_id,
+            grupo_id: grupo.grupo_id,
             voluntario_id: voluntario.voluntario_id,
           });
         }

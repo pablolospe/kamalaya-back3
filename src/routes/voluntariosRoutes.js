@@ -22,7 +22,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const result = validarVoluntario(req.body);
-    console.log(req.body);
+    // console.log(req.body);
     const disponibilidades = req.body.Disponibilidades[0]
 
     if (result.error) {
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
     };    
     // Crear el voluntario y obtener su ID
     const voluntarioCreado = await Voluntario.create(nuevoVoluntario.data);
-    console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
+    // console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
 
     // Luego, usar el voluntario_id para crear la disponibilidad
     const result2 = validarDisponibilidad(disponibilidades);
