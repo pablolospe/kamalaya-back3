@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { generateToken } = require('../controllers/utils.js');
+const { generateToken } = require('../utils/generateToken');
 const { User } = require('../db/db.js');
 const { validarLogin } = require('../schemas/login.js');
 

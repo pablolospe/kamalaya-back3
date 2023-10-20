@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
+const {diaSemana} = require('../utils/diaSemana')
 
 module.exports = (sequelize) => {
-
-  sequelize.define(
+  const Grupo = sequelize.define(
     'Grupo',
     {
       grupo_id: {
@@ -10,17 +10,24 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      paciente_id: {
-        type: DataTypes.INTEGER,
-        foreignKey: true,
+      diaSemana: {
+        type: DataTypes.ENUM(Object.values(diaSemana)),
+        // allowNull: false
       },
-      voluntario_id: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        foreignKey: true,
+      fechaDeInicio: {
+        type: DataTypes.DATEONLY,
+      },
+      horaInicio: {
+        type: DataTypes.TIME,
+      },
+      horaFin: {
+        type: DataTypes.TIME,
       },
     },
-    // {
-    //   paranoid: true,
-    // }
+    {
+      timestamps: false, // Si no necesitas campos de fecha y hora en esta tabla
+    }
   );
+
+  return Grupo;
 };

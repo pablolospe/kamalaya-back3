@@ -1,14 +1,5 @@
 const { DataTypes } = require('sequelize');
-
-const DiaSemanaEnum = {
-  LUNES: 'lunes',
-  MARTES: 'martes',
-  MIERCOLES: 'miercoles',
-  JUEVES: 'jueves',
-  VIERNES: 'viernes',
-  SABADO: 'sabado',
-  DOMINGO: 'domingo',
-};
+const {diaSemana} = require('../utils/diaSemana')
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -23,7 +14,7 @@ module.exports = (sequelize) => {
       //   type: DataTypes.INTEGER,
       // },
       diaSemana: {
-        type: DataTypes.ENUM(Object.values(DiaSemanaEnum)),
+        type: DataTypes.ENUM(Object.values(diaSemana)),
         // allowNull: false
       },
       horaInicio: {
