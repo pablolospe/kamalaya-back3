@@ -72,20 +72,6 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const data = req.body;
-//     const voluntario = await Voluntario.findByPk(id);
-
-//     await voluntario.update(data);
-//     res.status(200).json(voluntario);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
-
-
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -108,8 +94,6 @@ router.put('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
-    
-    console.log(diaSemana);
     
     const filter = {};
     

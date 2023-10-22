@@ -1,7 +1,6 @@
 const { Router } = require('express');
-const { Disponibilidades, Paciente } = require('../db/db');
+const { Paciente } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
-const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
@@ -16,7 +15,7 @@ router.post('/', async (req, res) => {
     const nuevoPaciente = {
       ...result,
     };
-    console.log(nuevoPaciente);
+    // console.log(nuevoPaciente);
     Paciente.create(nuevoPaciente.data);
     res.status(200).json({ nuevoPaciente });
   } catch (error) {

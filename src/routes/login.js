@@ -18,8 +18,9 @@ router.post('/', async (req, res) => {
     if (user) {
       if (bcrypt.compareSync(password, user.hashPassword)) {
         res.send({
-          id: user.user_id,
+          user_id: user.user_id,
           nombre: user.nombre,
+          apellido: user.apellido,
           email: user.email,
           role: user.role,
           token: generateToken(user),

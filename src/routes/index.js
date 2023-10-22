@@ -8,4 +8,5 @@ module.exports = {
     vacacionesRoutes: (require("./vacacionesRoutes")),
     login: (require("./login")),
     signin: (require("./signin")),
+    userRoutes: (require("./userRoutes")),
 }

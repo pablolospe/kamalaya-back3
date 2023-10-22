@@ -1,30 +1,33 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
-module.exports = (req , res , next) => {
-    const authorization = req.get('authorization')
+module.exports = (req, res, next) => {
+  const authorization = req.get('authorization');
 
-    let token = null;
+  let token = null;
 
-    if(authorization && authorization.toLowerCase().startsWith('bearer')){
-        token = authorization.substring(7);
-    }
+  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+    token = authorization.substring(7);
+  }
+  console.log(authorization);
+  console.log(token);
 
-    const decodedToken = jwt.verify(token, process.env.SECRET)
-    
-    if(!token || !decodedToken.id){
-        return res.status(401).json({ error: 'Token invalido o faltante'})
-    }
+  const decodedToken = jwt.verify(token, process.env.SECRET);
 
-    const { id } = decodedToken;
-    const {userRole} = decodedToken;
-    const {userName} = decodedToken;
-    const {userEmail} = decodedToken;
+  if (!token || !decodedToken.user_id) {
+    return res.status(401).json({ error: 'Token invalido o faltante' });
+  }
 
-    req.body.user_id = user_id;
-    req.body.userRole = userRole
-    req.body.userName = userName
-    req.body.userEmail = userEmail
+  const { user_id } = decodedToken;
+  const { role } = decodedToken;
+  // const { nombre } = decodedToken;
+  // const { apellido } = decodedToken;
+  // const { email } = decodedToken;
 
-    next()
+  req.body.user_id = user_id;
+  req.body.role = role;
+  // req.body.nombre = nombre;
+  // req.body.apellido = apellido;
+  // req.body.email = email;
 
-}
+  next();
+};

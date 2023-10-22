@@ -80,14 +80,6 @@ module.exports = (sequelize) => {
       fechaBaja: {
         type: DataTypes.DATEONLY,
       },
-      // grupo_id: {
-      //   type: DataTypes.INTEGER,
-      //   references: {
-      //     model: 'Grupo', // El nombre de la tabla a la que hace referencia
-      //     key: 'grupo_id', // El nombre de la columna en la tabla "Grupo"
-      //   },
-      // },
-      
     }, 
     // {
     //   paranoid: true,
