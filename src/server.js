@@ -14,7 +14,7 @@ config();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cors());
-app.use('/voluntarios', voluntariosRoutes);
+app.use('/voluntarios', userExtractor, voluntariosRoutes);
 app.use('/paciente', pacienteRoutes);
 app.use('/grupo', grupoRoutes);
 app.use('/login', login);
