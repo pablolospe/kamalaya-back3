@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     'AntecedentePatologico',
     {
-      antecedente_id: {
+      antecedente_patologico_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true

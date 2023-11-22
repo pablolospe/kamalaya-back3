@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
@@ -46,9 +46,28 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-// const { Usuario } = sequelize.models;
+const { Voluntario, Disponibilidades, HistorialEnKamalaya, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Paciente, Grupo, GrupoVoluntario } = sequelize.models;
+
+Voluntario.hasMany(Disponibilidades, { foreignKey: 'voluntario_id' })
+Disponibilidades.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
+
+Voluntario.hasMany(AntecedenteDeAcompaniamiento, { foreignKey: 'voluntario_id' })
+AntecedenteDeAcompaniamiento.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
+
+Voluntario.hasMany(AntecedentePatologico, { foreignKey: 'voluntario_id' })
+AntecedentePatologico.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
+
+Voluntario.hasMany(Vacaciones, { foreignKey: 'voluntario_id' })
+Vacaciones.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
+
+Grupo.belongsToMany(Voluntario, { through: GrupoVoluntario, foreignKey: 'grupo_id' });
+Voluntario.belongsToMany(Grupo, { through: GrupoVoluntario, foreignKey: 'voluntario_id' });
+
+Grupo.belongsTo(Paciente, { foreignKey: 'paciente_id' });
+Paciente.hasMany(Grupo, { foreignKey: 'paciente_id' });
 
 module.exports = {
   ...sequelize.models,
-  conn: sequelize,
+  conn: sequelize, 
+  Op
 };

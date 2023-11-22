@@ -8,9 +8,9 @@ const generos = {
 module.exports = (sequelize) => {
 
   sequelize.define(
-    'Usuario',
+    'Voluntario',
     {
-      usuario_id: {
+      voluntario_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
         // allowNull: false,
       },
       dni: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
       },
       email: {
         type: DataTypes.STRING,
@@ -36,6 +36,12 @@ module.exports = (sequelize) => {
         // allowNull: false,
       },
       telefono2: {
+        type: DataTypes.STRING,
+      },
+      lat: {
+        type: DataTypes.STRING,
+      },
+      lng: {
         type: DataTypes.STRING,
       },
       calle: {
@@ -54,13 +60,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
       },
       codigoPostal: {
-        type: DataTypes.STRING,
-      },
-      hashPassword: {
-        type: DataTypes.STRING,
-        // allowNull: false,
-      },
-      rol_usuario: {
         type: DataTypes.STRING,
       },
       telefonoEmergencia: {
