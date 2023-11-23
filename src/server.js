@@ -2,8 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const {voluntariosRoutes, pacienteRoutes, grupoRoutes, disponibilidadRoutes, antecedenteDeAcompaniamientoRoutes, antecedentePatologicoRoutes, vacacionesRoutes, login, signin, userRoutes } = require('./routes');
-// const disponibilidadRoutes = require('./routes/disponibilidadRoutes');
-// const antecedenteDeAcompaniamientoRoute = require('./routes/antecedenteDeAcompaniamientoRoute.js');
+
 const app = express();
 const { config } = require('dotenv');
 const userExtractor = require('./middleware/userExtractor');
