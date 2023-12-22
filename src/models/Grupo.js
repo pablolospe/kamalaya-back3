@@ -26,6 +26,11 @@ module.exports = (sequelize) => {
       horaFin: {
         type: DataTypes.TIME,
       },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
     },
     {
       timestamps: false, // Si no necesitas campos de fecha y hora en esta tabla
