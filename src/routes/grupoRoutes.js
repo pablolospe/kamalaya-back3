@@ -60,32 +60,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-
-// router.post('/', async (req, res) => {
-//   try {
-//     const result = validarGrupo(req.body);
-// console.log(result);
-//     if (result.error) {
-//       return res.status(400).json({ error: JSON.parse(result.error) });
-//     }
-
-//     const nuevoGrupo = {
-//       ...result,
-//     };
-
-//     console.log(nuevoGrupo);
-
-//     // Utiliza await para esperar a que la operación de creación se complete
-//     const grupoCreado = await Grupo.create(nuevoGrupo.data);
-
-//     // Responde al cliente después de que se haya creado el grupo
-//     res.status(200).json({ nuevoGrupo: grupoCreado });
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
-
-
 router.get('/', async (req, res) => {
   try {
     const grupos = await Grupo.findAll({
@@ -107,23 +81,23 @@ router.get('/', async (req, res) => {
 //   }
 // });
 
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const pacienteABorrar = await Paciente.findByPk(id);
-//     if (!pacienteABorrar) res.status(200).send('Voluntario no encontrado');
-//     else {
-//       await pacienteABorrar.destroy();
-//       res
-//         .status(200)
-//         .json(
-//           `Paciente ${pacienteABorrar.nombre} ${pacienteABorrar.apellido} (${pacienteABorrar.email}) borrado/a con éxito.`
-//         );
-//     }
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const grupoABorrar = await Grupo.findByPk(id);
+    if (!grupoABorrar) res.status(200).send('Grupo no encontrado');
+    else {
+      await grupoABorrar.destroy();
+      res
+        .status(200)
+        .json(
+          `Grupo ${grupoABorrar.grupo_id} borrado/a con éxito.`
+        );
+    }
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 // router.put('/:id', async (req, res) => {
 //   try {
