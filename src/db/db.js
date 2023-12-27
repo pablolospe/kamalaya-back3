@@ -48,6 +48,9 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 const { Voluntario, Disponibilidades, HistorialEnKamalaya, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Paciente, Grupo, GrupoVoluntario } = sequelize.models;
 
+Voluntario.hasOne(Paciente, { foreignKey: 'voluntario_id' });
+Paciente.belongsTo(Voluntario, { foreignKey: 'voluntario_id' });
+
 Voluntario.hasMany(Disponibilidades, { foreignKey: 'voluntario_id' })
 Disponibilidades.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
 
@@ -60,11 +63,11 @@ AntecedentePatologico.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
 Voluntario.hasMany(Vacaciones, { foreignKey: 'voluntario_id' })
 Vacaciones.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
 
-Grupo.belongsToMany(Voluntario, { through: GrupoVoluntario, foreignKey: 'grupo_id', onDelete: 'CASCADE' });
-Voluntario.belongsToMany(Grupo, { through: GrupoVoluntario, foreignKey: 'voluntario_id', onDelete: 'CASCADE' });
+Grupo.belongsToMany(Voluntario, { through: GrupoVoluntario, foreignKey: 'grupo_id', });
+Voluntario.belongsToMany(Grupo, { through: GrupoVoluntario, foreignKey: 'voluntario_id', });
 
-Grupo.belongsTo(Paciente, { foreignKey: 'paciente_id', onDelete: 'CASCADE' });
-Paciente.hasMany(Grupo, { foreignKey: 'paciente_id', onDelete: 'CASCADE' });
+// Grupo.belongsTo(Paciente, { foreignKey: 'paciente_id', });
+// Paciente.hasMany(Grupo, { foreignKey: 'paciente_id', });
 
 module.exports = {
   ...sequelize.models,

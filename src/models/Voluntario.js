@@ -15,6 +15,9 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      // paciente: {
+      //   type: DataTypes.INTEGER,
+      // },
       nombre: {
         type: DataTypes.STRING,
         // allowNull: false,
@@ -91,6 +94,10 @@ module.exports = (sequelize) => {
       },
       experienciaCP: {
         type: DataTypes.BOOLEAN,
+      },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
     },
     // {
