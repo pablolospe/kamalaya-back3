@@ -112,6 +112,7 @@ module.exports = (sequelize) => {
       },
       fechaDeDiagnostico: {
         type: DataTypes.DATEONLY,
+        allowNull: true,
       },
       enfermedadActual: {
         type: DataTypes.TEXT,

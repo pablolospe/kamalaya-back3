@@ -1,9 +1,10 @@
 const z = require('zod');
+const { nullableUndefinedDateSchema } = require('../utils/nullableUndefinedDateSchema');
 
 const pacienteSchema = z.object({
   voluntario_id: z.number(),
-  fechaAlta: z.coerce.date().nullable(),
-  fechaBaja: z.coerce.date().nullable(),
+  fechaAlta: nullableUndefinedDateSchema,
+  fechaBaja: nullableUndefinedDateSchema,
   cuidadorPrincipal: z.string(),
   telefonoCuidadorPrincipal: z.string(),
   insumosPrestados: z.string(),
@@ -33,7 +34,7 @@ const pacienteSchema = z.object({
   quienDeriva: z.string(), 
   contactoQuienDeriva: z.string(), 
   diagnostico: z.string(),
-  fechaDeDiagnostico: z.coerce.date().nullable(),
+  fechaDeDiagnostico: nullableUndefinedDateSchema,
   enfermedadActual: z.string(),
   ECOGbasal: z.enum(["","1","2","3","4","5"]),
   antecedentesEnfermedadesPrevias: z.string(),
