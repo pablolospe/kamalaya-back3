@@ -2,7 +2,7 @@ const z = require('zod');
 
 const pacienteSchema = z.object({
   voluntario_id: z.number(),
-  fechaAlta: z.coerce.date(),
+  fechaAlta: z.coerce.date().nullable(),
   fechaBaja: z.coerce.date().nullable(),
   cuidadorPrincipal: z.string(),
   telefonoCuidadorPrincipal: z.string(),
@@ -32,6 +32,8 @@ const pacienteSchema = z.object({
 
   quienDeriva: z.string(), 
   contactoQuienDeriva: z.string(), 
+  diagnostico: z.string(),
+  fechaDeDiagnostico: z.coerce.date().nullable(),
   enfermedadActual: z.string(),
   ECOGbasal: z.enum(["","1","2","3","4","5"]),
   antecedentesEnfermedadesPrevias: z.string(),

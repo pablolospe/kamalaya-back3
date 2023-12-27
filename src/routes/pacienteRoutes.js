@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     // console.log(result.error);
 
     if (result.error) {
+      console.log(result.error);
       return res.status(400).json({ error: JSON.parse(result.error) });
     }
     const nuevoPaciente = {

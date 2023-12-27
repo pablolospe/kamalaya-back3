@@ -107,6 +107,12 @@ module.exports = (sequelize) => {
       contactoQuienDeriva: {
         type: DataTypes.STRING,
       },
+      diagnostico: {
+        type: DataTypes.STRING,
+      },
+      fechaDeDiagnostico: {
+        type: DataTypes.DATEONLY,
+      },
       enfermedadActual: {
         type: DataTypes.TEXT,
       },
