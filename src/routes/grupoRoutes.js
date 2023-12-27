@@ -95,7 +95,7 @@ router.delete('/:id', async (req, res) => {
         );
     }
   } catch (error) {
-    res.status(404).json(error);
+    res.status(404).json(error.message);
   }
 });
 

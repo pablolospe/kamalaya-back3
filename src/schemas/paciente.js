@@ -38,10 +38,10 @@ const pacienteSchema = z.object({
   medicacionActual: z.string(), 
   equipoSeguimiento: z.string(),
 
-  pacienteConoceDiagnostico: z.boolean().nullable().optional(),
-  pacienteConocePronostico: z.boolean().nullable().optional(),
-  familiaConoceDiagnostico: z.boolean().nullable().optional(),
-  familiaConocePronostico: z.boolean().nullable().optional(),
+  pacienteConoceDiagnostico: z.enum(["","Si","No","Falta preguntar"]),
+  pacienteConocePronostico: z.enum(["","Si","No","Falta preguntar"]),
+  familiaConoceDiagnostico: z.enum(["","Si","No","Falta preguntar"]),
+  familiaConocePronostico: z.enum(["","Si","No","Falta preguntar"]),
 
 
   problemasActuales: z.string(),

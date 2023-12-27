@@ -69,13 +69,15 @@ router.put('/:id', async (req, res) => {
     const result = validarPaciente(req.body);
 
     if (result.error) {
+      console.log(result.error);
       return res.status(400).json({ error: JSON.parse(result.error) });
     }
     
     await pacienteAActualizar.update(result.data);
     res.status(200).json({ message: 'Paciente actualizado con éxito', paciente: pacienteAActualizar });
   } catch (error) {
-    res.status(404).json(error);
+    console.log(error);
+    res.status(404).json(error.message);
   }
 });
 

@@ -125,17 +125,17 @@ module.exports = (sequelize) => {
 
       // DIAGNÓSTICO
       pacienteConoceDiagnostico: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
         allowNull: true, 
       },
       pacienteConocePronostico: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
       },
       familiaConoceDiagnostico: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
       },
       familiaConocePronostico: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
       },
       
       problemasActuales: {
