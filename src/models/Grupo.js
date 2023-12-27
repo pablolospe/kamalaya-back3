@@ -26,6 +26,9 @@ module.exports = (sequelize) => {
       horaFin: {
         type: DataTypes.TIME,
       },
+      paciente_id: {
+        type: DataTypes.INTEGER,
+      },
       activo: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

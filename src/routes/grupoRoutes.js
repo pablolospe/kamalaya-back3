@@ -52,7 +52,6 @@ router.post('/', async (req, res) => {
       }
     }
 
-
     return res.status(201).json(nuevoGrupo);
   } catch (error) {
     console.error(error);
@@ -67,6 +66,7 @@ router.get('/', async (req, res) => {
     });
     res.status(200).json(grupos);
   } catch (error) {
+    console.log(error);
     res.status(404).json(error);
   }
 });
