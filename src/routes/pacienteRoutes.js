@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Paciente, Voluntario } = require('../db/db');
+const { Paciente, Voluntario, Seguimiento } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
 
 const router = Router();
@@ -36,7 +36,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const paciente = await Paciente.findByPk(id, { include: [Voluntario] });
+    const paciente = await Paciente.findByPk(id, { include: [Voluntario, Seguimiento] });
     res.status(200).json(paciente);
   } catch (error) {
     res.status(404).json(error);
