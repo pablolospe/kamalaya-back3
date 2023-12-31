@@ -51,15 +51,17 @@ router.post('/', async (req, res) => {
 //   }
 // });
     
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const paciente = await Paciente.findByPk(id, { include: [Voluntario] });
-//     res.status(200).json(paciente);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const seguimientos = await Seguimiento.findAll({
+      where: {paciente_id: id}
+    });
+    res.status(200).json(seguimientos);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 // router.delete('/:id', async (req, res) => {
 //   const { id } = req.params;

@@ -9,6 +9,7 @@ const seguimientoSchema = z.object({
   llamadaOVisita: z.enum(['llamada', 'visita']),
   problemasActualesYNecesidades: z.string(),
   paciente_id: z.number(),
+  ECOG: z.enum(["","0","1","2","3","4","5"]),
 
 });
 
