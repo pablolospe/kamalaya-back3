@@ -7,9 +7,9 @@ const tipoDeSeguimiento = {
 
 module.exports = (sequelize) => {
   sequelize.define(
-    'SeguimientoPaciente',
+    'Seguimiento',
     {
-      visita_id: {
+      seguimiento_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -32,10 +32,10 @@ module.exports = (sequelize) => {
       problemasActualesYNecesidades: {
         type: DataTypes.STRING,
       },
-// RELACION A VOLUNTARIOS
-      // voluntarios: {
-      //   type: DataTypes.INTEGER,
-      // },
+      paciente_id: {
+        type: DataTypes.INTEGER,
+      },
+      // RELACION A VOLUNTARIOS
     },
     {
       timestamps: false,

@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
         const voluntario = await Voluntario.findByPk(idVoluntario);
         if (voluntario) {
           // Crea una entrada en la tabla GrupoVoluntario para asociar el grupo y el voluntario
-          console.log('aidi'+grupo.grupo_id);
+          // console.log('aidi'+grupo.grupo_id);
           await GrupoVoluntario.create({
             grupo_id: grupo.grupo_id,
             voluntario_id: voluntario.voluntario_id,

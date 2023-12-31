@@ -36,7 +36,7 @@ const pacienteSchema = z.object({
   diagnostico: z.string(),
   fechaDeDiagnostico: nullableUndefinedDateSchema,
   enfermedadActual: z.string(),
-  ECOGbasal: z.enum(["","1","2","3","4","5"]),
+  ECOGbasal: z.enum(["","0","1","2","3","4","5"]),
   antecedentesEnfermedadesPrevias: z.string(),
   medicacionActual: z.string(), 
   equipoSeguimiento: z.string(),

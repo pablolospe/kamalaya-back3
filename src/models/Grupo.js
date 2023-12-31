@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
       },
       diaSemana: {
         type: DataTypes.ENUM(Object.values(diaSemana)),
-        // allowNull: false
       },
       fechaDeInicio: {
         type: DataTypes.DATEONLY,

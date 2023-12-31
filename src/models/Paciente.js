@@ -118,7 +118,7 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
       },
       ECOGbasal: {
-        type: DataTypes.ENUM(["","1","2","3","4","5"]),
+        type: DataTypes.ENUM(["","0","1","2","3","4","5"]),
       },
       antecedentesEnfermedadesPrevias: {
         type: DataTypes.STRING,
