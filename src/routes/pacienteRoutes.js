@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Paciente, Voluntario, Seguimiento } = require('../db/db');
+const { Paciente, Voluntario, Seguimiento, Op } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
 
 const router = Router();
@@ -26,7 +26,25 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const pacientes = await Paciente.findAll();
+    const { nombre, apellido, localidad } = req.query;
+
+    const filter = {};
+
+    if (nombre) {
+      filter.nombre = { [Op.iLike]: `%${nombre}%` };
+    }
+    if (apellido) {
+      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+    }
+    if (localidad) {
+      filter.localidad = { [Op.iLike]: `%${localidad}%` };
+    }
+
+
+    const pacientes = await Paciente.findAll({
+      where: filter
+    });
+    
     res.status(200).json(pacientes);
   } catch (error) {
     res.status(404).json(error);
