@@ -24,7 +24,7 @@ conn.sync({force:false}).then(() => {
         },
       ]
 
-      // User.bulkCreate(user).then(() => console.log("User cargado"));
+      User.bulkCreate(user).then(() => console.log("User cargado"));
       // Voluntario.bulkCreate(voluntario).then(() => console.log("Voluntarios cargados"));
       // Paciente.bulkCreate(paciente).then(() => console.log("Pacientes cargados"));
 })})
