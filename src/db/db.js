@@ -46,7 +46,21 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Voluntario, Disponibilidades, HistorialEnKamalaya, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Paciente, Grupo, GrupoVoluntario, Seguimiento, SeguimientoVoluntario } = sequelize.models;
+const { 
+  Voluntario, 
+  Disponibilidades, 
+  HistorialEnKamalaya, 
+  AntecedenteDeAcompaniamiento, 
+  AntecedentePatologico, 
+  Vacaciones, 
+  Paciente, 
+  Grupo, 
+  GrupoVoluntario, 
+  Seguimiento, 
+  SeguimientoVoluntario, 
+  Capacitaciones, 
+  CapacitacionVoluntario 
+} = sequelize.models;
 
 Voluntario.hasOne(Paciente, { foreignKey: 'voluntario_id' });
 Paciente.belongsTo(Voluntario, { foreignKey: 'voluntario_id' });
@@ -65,6 +79,9 @@ Vacaciones.belongsTo(Voluntario, { foreignKey: 'voluntario_id' })
 
 Grupo.belongsToMany(Voluntario, { through: GrupoVoluntario, foreignKey: 'grupo_id', });
 Voluntario.belongsToMany(Grupo, { through: GrupoVoluntario, foreignKey: 'voluntario_id', });
+
+Capacitaciones.belongsToMany(Voluntario, { through: CapacitacionVoluntario, foreignKey: 'capacitacion_id', });
+Voluntario.belongsToMany(Capacitaciones, { through: CapacitacionVoluntario, foreignKey: 'voluntario_id', });
 
 Grupo.belongsTo(Paciente, { foreignKey: 'paciente_id', });
 Paciente.hasMany(Grupo, { foreignKey: 'paciente_id', });

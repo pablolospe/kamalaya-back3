@@ -5,6 +5,7 @@ const generos = {
   F:'F',
   OTRO:"otro"
 }
+
 module.exports = (sequelize) => {
 
   sequelize.define(
@@ -15,9 +16,6 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // paciente: {
-      //   type: DataTypes.INTEGER,
-      // },
       nombre: {
         type: DataTypes.STRING,
         // allowNull: false,
