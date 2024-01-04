@@ -2,7 +2,7 @@ const app = require('./src/server')
 const { conn } = require('./src/db/db.js');
 const { Voluntario, User, Paciente } = require("./src/db/db");
 
-conn.sync({force:false}).then(() => {
+conn.sync({force:true}).then(() => {
     app.listen(8000, () => {
       console.log(`Server running...`);
 
@@ -19,13 +19,13 @@ conn.sync({force:false}).then(() => {
         {
           nombre:"Pablo", apellido:"Lospennato", email:"p@x.l", hashPassword:"$2b$08$VsBJhQi9LndBKwrikXtjpu5B8Ywj1d5dnaWLpwr8o1j.mYFeYV9NC", role:"Admin"
         },
-        // {
-        //   nombre:"Cosme", apellido:"Fulanito", email:"user@gmail.com", hashPassword:"$2b$08$$2b$08$iM1MvpU1xLP30COVHBFYQOMQtV.5MOvtAxQr4qF16Hfi2vN2mzFiO", role:"User"
-        // },
+        {
+          nombre:"Cosme", apellido:"Fulanito", email:"user@gmail.com", hashPassword:"$2b$08$$2b$08$iM1MvpU1xLP30COVHBFYQOMQtV.5MOvtAxQr4qF16Hfi2vN2mzFiO", role:"User"
+        },
       ]
 
       User.bulkCreate(user).then(() => console.log("User cargado"));
-      // Voluntario.bulkCreate(voluntario).then(() => console.log("Voluntarios cargados"));
-      // Paciente.bulkCreate(paciente).then(() => console.log("Pacientes cargados"));
+      Voluntario.bulkCreate(voluntario).then(() => console.log("Voluntarios cargados"));
+      Paciente.bulkCreate(paciente).then(() => console.log("Pacientes cargados"));
 
 })})
