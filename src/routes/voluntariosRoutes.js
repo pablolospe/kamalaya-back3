@@ -75,7 +75,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const voluntarioAActualizar = await Voluntario.findByPk(id);
 
     const result = validarVoluntario(req.body);

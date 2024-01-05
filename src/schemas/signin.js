@@ -6,7 +6,7 @@ const signinSchema = z.object({
   }),
   apellido: z.string(),
   email: z.string({ required_error: 'El email es requerido', invalid_type_error: 'el email debe tener un formato correcto' }),
-  role: z.string(),
+  role: z.enum(['User', 'Admin']),
   password: z.string(),
 });
 
