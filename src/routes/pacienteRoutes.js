@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Paciente, Voluntario, Seguimiento, Op } = require('../db/db');
+const { Paciente, Voluntario, Seguimiento, Grupo, Op } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
 
 const router = Router();
@@ -40,21 +40,29 @@ router.get('/', async (req, res) => {
       filter.localidad = { [Op.iLike]: `%${localidad}%` };
     }
 
-
     const pacientes = await Paciente.findAll({
-      where: filter
+      where: filter,
     });
-    
+
     res.status(200).json(pacientes);
   } catch (error) {
     res.status(404).json(error);
   }
 });
-    
+
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const paciente = await Paciente.findByPk(id, { include: [Voluntario, Seguimiento] });
+    const paciente = await Paciente.findByPk(id, {
+      include: [
+        Voluntario,
+        Seguimiento,
+        {
+          model: Grupo,
+          include: Voluntario, // Incluir los voluntarios asociados con el grupo
+        },
+      ],
+    });
     res.status(200).json(paciente);
   } catch (error) {
     res.status(404).json(error);
@@ -91,9 +99,14 @@ router.put('/:id', async (req, res) => {
       console.log(result.error);
       return res.status(400).json({ error: JSON.parse(result.error) });
     }
-    
+
     await pacienteAActualizar.update(result.data);
-    res.status(200).json({ message: 'Paciente actualizado con éxito', paciente: pacienteAActualizar });
+    res
+      .status(200)
+      .json({
+        message: 'Paciente actualizado con éxito',
+        paciente: pacienteAActualizar,
+      });
   } catch (error) {
     console.log(error);
     res.status(404).json(error.message);
