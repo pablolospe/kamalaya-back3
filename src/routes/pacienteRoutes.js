@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, localidad } = req.query;
+    const { nombre, apellido, localidad, orderBy='nombre' } = req.query;
 
     const filter = {};
 
@@ -39,10 +39,16 @@ router.get('/', async (req, res) => {
     if (localidad) {
       filter.localidad = { [Op.iLike]: `%${localidad}%` };
     }
+    let orderColumn = ''
+    if(orderBy)orderColumn = orderBy !== 'apellido' ? 'apellido' : 'nombre';
 
     const pacientes = await Paciente.findAll({
       where: filter,
+      order: [[orderColumn, 'DESC']], // Order by the selected column in ascending order
     });
+    // const pacientes = await Paciente.findAll({
+    //   where: filter,
+    // });
 
     res.status(200).json(pacientes);
   } catch (error) {
