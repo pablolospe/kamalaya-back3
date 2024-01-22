@@ -93,7 +93,7 @@ router.put('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
+    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana, activo } = req.query;
     
     const filter = {};
     
@@ -117,6 +117,9 @@ router.get('/', async (req, res) => {
     }
     if (experienciaCP !== undefined) {
       filter.experienciaCP = experienciaCP === 'true';
+    }
+    if (activo !== undefined) {
+      filter.activo = activo === 'true';
     }
     
     let voluntarios;
