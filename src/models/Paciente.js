@@ -158,10 +158,10 @@ module.exports = (sequelize) => {
       familia: {
         type: DataTypes.TEXT,
       },
-      estáActivo: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-      },
+      // estaActivo: {
+      //   type: DataTypes.BOOLEAN,
+      //   defaultValue: true,
+      // },
     }, 
     // {
     //   paranoid: true,
