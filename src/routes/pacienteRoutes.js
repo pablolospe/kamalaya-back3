@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
 
     const pacientes = await Paciente.findAll({
       where: filter,
-      order: [[orderColumn, 'DESC']], // Order by the selected column in ascending order
+      order: [[orderColumn, 'ASC']], // Order by the selected column in ascending order
     });
     // const pacientes = await Paciente.findAll({
     //   where: filter,
