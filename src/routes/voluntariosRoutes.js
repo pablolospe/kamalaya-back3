@@ -98,19 +98,19 @@ router.get('/', async (req, res) => {
     const filter = {};
     
     if (nombre) {
-      filter.nombre = { [Op.iLike]: `%${nombre}%` };
+      filter.nombre = { [Op.substring]: `%${nombre}%` };
     }
     if (apellido) {
-      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+      filter.apellido = { [Op.substring]: `%${apellido}%` };
     }
     if (localidad) {
-      filter.localidad = { [Op.iLike]: `%${localidad}%` };
+      filter.localidad = { [Op.substring]: `%${localidad}%` };
     }
     if (profesion_oficio_ocupacion) {
-      filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
+      filter.profesion_oficio_ocupacion = { [Op.substring]: `%${profesion_oficio_ocupacion}%` };
     }
     if (hobbies_habilidades) {
-      filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
+      filter.hobbies_habilidades = { [Op.substring]: `%${hobbies_habilidades}%` };
     }
     if (tieneAuto !== undefined) {
       filter.tieneAuto = tieneAuto === 'true';

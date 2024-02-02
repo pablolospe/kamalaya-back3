@@ -31,13 +31,13 @@ router.get('/', async (req, res) => {
     const filter = {};
 
     if (nombre) {
-      filter.nombre = { [Op.iLike]: `%${nombre}%` };
+      filter.nombre = { [Op.substring]: `%${nombre}%` };
     }
     if (apellido) {
-      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+      filter.apellido = { [Op.substring]: `%${apellido}%` };
     }
     if (localidad) {
-      filter.localidad = { [Op.iLike]: `%${localidad}%` };
+      filter.localidad = { [Op.substring]: `%${localidad}%` };
     }
     let orderColumn = ''
     if(orderBy)orderColumn = orderBy !== 'apellido' ? 'apellido' : 'nombre';
