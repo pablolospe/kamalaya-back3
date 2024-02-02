@@ -27,7 +27,7 @@ const voluntarioSchema = z.object({
   fechaBaja: z.coerce.date(),
   tieneAuto: z.boolean(),
   experienciaCP: z.boolean(),
-  activo: z.boolean(),
+  activo: z.boolean(), // poner opcional
 });
 
 function validarVoluntario(object) {
