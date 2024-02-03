@@ -57,16 +57,20 @@ router.get('/', async (req, res) => {
     res.status(404).json(error);
   }
 });
-    
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const paciente = await Paciente.findByPk(id);
-//     res.status(200).json(paciente);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const grupo = await Grupo.findByPk(id, {
+      include: [Paciente, Voluntario ]
+    });
+    res.status(200).json(grupo);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json(error);
+  }
+});
+
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
