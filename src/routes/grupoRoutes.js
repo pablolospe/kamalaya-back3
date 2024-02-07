@@ -106,7 +106,7 @@ router.put('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Paciente no encontrado' });
     }
 
-    const grupoAEditar = await Grupo.findByPk(id, );
+    const grupoAEditar = await Grupo.findByPk(id);
     await grupoAEditar.update(result);
 
     await GrupoVoluntario.destroy({
