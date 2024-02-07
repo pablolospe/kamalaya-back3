@@ -51,11 +51,23 @@ router.get('/', async (req, res) => {
   }
 });
     
-router.get('/:id', async (req, res) => {
+router.get('/paciente/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const seguimientos = await Seguimiento.findAll({
       where: {paciente_id: id}
+    });
+    res.status(200).json(seguimientos);
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const seguimientos = await Seguimiento.findAll({
+      where: {seguimiento_id: id}
     });
     res.status(200).json(seguimientos);
   } catch (error) {
@@ -125,46 +137,5 @@ router.put('/:id', async (req, res) => {
     res.status(404).json(error);
   }
 });
-
-
-
-
-
-
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const { voluntario_id } = req.body;
-//     const { id } = req.params;
-//     console.log(id);
-//     const seguimientoAActualizar = await Seguimiento.findByPk(id);
-
-//     const result = validarSeguimiento(req.body);
-
-//     if (result.error) {
-//       console.log(result.error);
-//       return res.status(400).json({ error: JSON.parse(result.error) });
-//     }
-
-//     if (voluntario_id && Array.isArray(voluntario_id)) {
-//       for (const idVoluntario of voluntario_id) {
-//         const voluntario = await Voluntario.findByPk(idVoluntario);
-//         if (voluntario) {
-//           // Crea una entrada en la tabla GrupoVoluntario para asociar el grupo y el voluntario
-//           // console.log('aidi'+grupo.grupo_id);
-//           await SeguimientoVoluntario.update({
-//             seguimiento_id: id,
-//             voluntario_id: voluntario.voluntario_id,
-//           });
-//         }
-//       }
-//     }
-    
-//     await seguimientoAActualizar.update(result.data);
-//     res.status(200).json({ message: 'Seguimiento actualizado con éxito', seguimiento: seguimientoAActualizar });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(404).json(error.message);
-//   }
-// });
 
 module.exports = router;
