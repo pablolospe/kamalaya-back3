@@ -55,7 +55,13 @@ router.get('/paciente/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const seguimientos = await Seguimiento.findAll({
-      where: {paciente_id: id}
+      where: {paciente_id: id },
+      include: [
+        {
+          model: Voluntario
+          // añadir otras opciones aquí, si es necesario (por ejemplo, atributos específicos para seleccionar)
+        }
+      ]
     });
     res.status(200).json(seguimientos);
   } catch (error) {
@@ -67,7 +73,13 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const seguimientos = await Seguimiento.findAll({
-      where: {seguimiento_id: id}
+      where: {seguimiento_id: id },
+      include: [
+        {
+          model: Voluntario
+          // añadir otras opciones aquí, si es necesario (por ejemplo, atributos específicos para seleccionar)
+        }
+      ]
     });
     res.status(200).json(seguimientos);
   } catch (error) {
@@ -99,17 +111,12 @@ router.put('/:id', async (req, res) => {
     const { id } = req.params;
     const { data: result, error } = validarSeguimiento(req.body)
     const { paciente_id, voluntario_id } = req.body;
-    console.log(result);
-    if (error) {
-      return res.status(400).json({ error: error.message }); 
-    }
+
+    if (error) return res.status(400).json({ error: error.message }); 
     
     const pacienteExistente = await Paciente.findByPk(paciente_id);
     
-    if (!pacienteExistente) {
-      console.log(id, paciente_id, voluntario_id);
-      return res.status(404).json({ error: 'Paciente no encontrado' });
-    }
+    if (!pacienteExistente) return res.status(404).json({ error: 'Paciente no encontrado' });
 
     const seguimientoAEditar = await Seguimiento.findByPk(id);
     await seguimientoAEditar.update(result);
@@ -122,14 +129,17 @@ router.put('/:id', async (req, res) => {
 
     if (voluntario_id && Array.isArray(voluntario_id)) {
       for (const idVoluntario of voluntario_id) {
-        const voluntario = await Voluntario.findByPk(idVoluntario);
-        if (!voluntario) {
-          return res.status(404).json({ error: 'Voluntario no encontrado para el id: ' + idVoluntario });
+        // Sólo trata de buscar y crear si idVoluntario no es una cadena vacía
+        if (idVoluntario !== '') {
+          const voluntario = await Voluntario.findByPk(idVoluntario);
+          if (!voluntario){
+            return res.status(404).json({ error: 'Voluntario no encontrado para el id: ' + idVoluntario });
+          }
+          await SeguimientoVoluntario.create({
+            seguimiento_id: id,
+            voluntario_id: voluntario.voluntario_id,
+          });
         }
-        await SeguimientoVoluntario.create({
-          seguimiento_id: id,
-          voluntario_id: voluntario.voluntario_id,
-        });
       }
     }
     res.status(200).json(seguimientoAEditar);
