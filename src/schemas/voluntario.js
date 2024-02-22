@@ -11,6 +11,7 @@ const voluntarioSchema = z.object({
   telefono2: z.string(),
   calle: z.string(),
   numero: z.string(),
+  departamento: z.string(),
   localidad: z.string(),
   provincia: z.string(),
   lat: z.string(),
@@ -24,7 +25,7 @@ const voluntarioSchema = z.object({
   hobbies_habilidades: z.string(),
   fechaDeNacimiento: z.coerce.date(),
   fechaAlta: z.coerce.date(),
-  fechaBaja: z.coerce.date(),
+  fechaBaja: z.date().nullable(),
   tieneAuto: z.boolean(),
   experienciaCP: z.boolean(),
   activo: z.boolean(), // poner opcional

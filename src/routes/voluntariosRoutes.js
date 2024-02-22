@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   try {
     const result = validarVoluntario(req.body);
     // console.log(req.body);
-    const disponibilidades = req.body.Disponibilidades[0]
+    // const disponibilidades = req.body.Disponibilidades[0]
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
@@ -37,18 +37,18 @@ router.post('/', async (req, res) => {
     // console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
 
     // Luego, usar el voluntario_id para crear la disponibilidad
-    const result2 = validarDisponibilidad(disponibilidades);
+    // const result2 = validarDisponibilidad(disponibilidades);
 
-    const nuevaDisponibilidad = {
-      voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
-      ...result2.data,
-    };
+    // const nuevaDisponibilidad = {
+    //   voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
+    //   ...result2.data,
+    // };
 
-    const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
+    // const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
 
-    await Disponibilidades.create(disponibilidadValidada.data);
+    // await Disponibilidades.create(disponibilidadValidada.data);
 
-    res.status(200).json({ nuevoVoluntario, nuevaDisponibilidad });
+    res.status(200).json({ nuevoVoluntario });
   } catch (error) {
     res.status(500).json(error);
   }

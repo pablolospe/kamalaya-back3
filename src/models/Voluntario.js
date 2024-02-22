@@ -51,6 +51,9 @@ module.exports = (sequelize) => {
       numero: {
         type: DataTypes.STRING,
       },
+      departamento: {
+        type: DataTypes.STRING,
+      },
       localidad: {
         type: DataTypes.STRING,
       },
