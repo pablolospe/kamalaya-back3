@@ -19,13 +19,13 @@ let sequelize = process.env.NODE_ENV === 'production'
       idle: 10000,
     },
     dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
+      // ssl: {
+      //   require: true,
+      //   rejectUnauthorized: false,
+      // },
       keepAlive: true,
     },
-    ssl: true,
+    // ssl: true,
   }) : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`, {
     logging: false,
     native: false,
