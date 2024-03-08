@@ -2,7 +2,7 @@ const app = require('./src/server')
 const { conn } = require('./src/db/db.js');
 const { Voluntario, User, Paciente } = require("./src/db/db");
 
-conn.sync({force:false}).then(() => {
+conn.sync({force:true}).then(() => {
     app.listen(8000, () => {
       console.log(`Server running...`);
 
