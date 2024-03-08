@@ -2,10 +2,10 @@ const { DataTypes } = require('sequelize');
 
 
 module.exports = (sequelize) => {
-  const GrupoVoluntario = sequelize.define(
-    'GrupoVoluntario',
+  const CapacitacionVoluntario = sequelize.define(
+    'CapacitacionVoluntario',
     {
-      grupo_id: {
+      capacitacion_id: {
         type: DataTypes.INTEGER,
       },
       voluntario_id: {
@@ -17,5 +17,5 @@ module.exports = (sequelize) => {
     }
   );
 
-  return GrupoVoluntario;
+  return CapacitacionVoluntario;
 };

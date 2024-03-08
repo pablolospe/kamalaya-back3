@@ -3,10 +3,12 @@ const { DataTypes } = require('sequelize');
 const generos = {
   M:'M',
   F:'F',
-  OTRO:"otro"
+  OTRO:"otro",
+  '':''
 }
-module.exports = (sequelize) => {
 
+module.exports = (sequelize) => {
+  
   sequelize.define(
     'Paciente',
     {
@@ -15,25 +17,49 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
+      fechaAlta: {
+        type: DataTypes.DATEONLY,
+      },
+      fechaBaja: {
+        type: DataTypes.DATEONLY,
+      },
+      cuidadorPrincipal: {
+        type: DataTypes.STRING,
+      },
+      telefonoCuidadorPrincipal: {
+        type: DataTypes.STRING,
+      },
+      insumosPrestados: {
+        type: DataTypes.STRING,
+      },
+      voluntariosQueAcompañan: {
+        // SERIA voluntario_id con TABLA INTERMEDIA
+        type: DataTypes.INTEGER,
+      },
+
       nombre: {
         type: DataTypes.STRING,
-        // allowNull: false,
       },
       apellido: {
         type: DataTypes.STRING,
-        // allowNull: false,
+      },
+      genero: {
+        type: DataTypes.ENUM(Object.values(generos)),
+      },
+      fechaDeNacimiento: {
+        type: DataTypes.DATEONLY,
       },
       dni: {
         type: DataTypes.STRING,
       },
       email: {
         type: DataTypes.STRING,
-        // allowNull: false,
-        // unique: true,
       },
       telefono: {
         type: DataTypes.STRING,
-        // allowNull: false,
+      },
+      telefono2: {
+        type: DataTypes.STRING,
       },
       lat: {
         type: DataTypes.STRING,
@@ -59,27 +85,83 @@ module.exports = (sequelize) => {
       codigoPostal: {
         type: DataTypes.STRING,
       },
-      telefonoEmergencia: {
+      
+      // SECCION RECURSOS
+      obraSocial: {
         type: DataTypes.STRING,
       },
-      nombreContactoEmergencia: {
+      ocupacionProfesionHobbie: {
         type: DataTypes.STRING,
       },
-      genero: {
-        type: DataTypes.ENUM(Object.values(generos)),
-      },
-      hobbies: {
+      situacionEconomica: {
         type: DataTypes.STRING,
       },
-      fechaDeNacimiento: {
-        type: DataTypes.DATEONLY,
+      situacionHabitacional: {
+        type: DataTypes.STRING,
       },
-      fechaAlta: {
-        type: DataTypes.DATEONLY,
+
+      // RESUMEN CLÍNICO
+      quienDeriva: {
+        type: DataTypes.STRING,
       },
-      fechaBaja: {
-        type: DataTypes.DATEONLY,
+      contactoQuienDeriva: {
+        type: DataTypes.STRING,
       },
+      diagnostico: {
+        type: DataTypes.STRING,
+      },
+      fechaDeDiagnostico: {
+        type: DataTypes.DATEONLY,
+        allowNull: true,
+      },
+      enfermedadActual: {
+        type: DataTypes.TEXT,
+      },
+      ECOGbasal: {
+        type: DataTypes.ENUM(["","0","1","2","3","4","5"]),
+      },
+      antecedentesEnfermedadesPrevias: {
+        type: DataTypes.STRING,
+      },
+      medicacionActual: {
+        type: DataTypes.STRING,
+      },
+      equipoSeguimiento: {
+        type: DataTypes.STRING,
+      },
+
+      // DIAGNÓSTICO
+      pacienteConoceDiagnostico: {
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
+        allowNull: true, 
+      },
+      pacienteConocePronostico: {
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
+      },
+      familiaConoceDiagnostico: {
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
+      },
+      familiaConocePronostico: {
+        type: DataTypes.ENUM(["","Si","No","Falta preguntar"]),
+      },
+      
+      problemasActuales: {
+        type: DataTypes.STRING,
+      },
+      recursosDisponibles: {
+        type: DataTypes.STRING,
+      },
+      recursosAExplotar: {
+        type: DataTypes.STRING,
+      },
+
+      familia: {
+        type: DataTypes.TEXT,
+      },
+      // estaActivo: {
+      //   type: DataTypes.BOOLEAN,
+      //   defaultValue: true,
+      // },
     }, 
     // {
     //   paranoid: true,

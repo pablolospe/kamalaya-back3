@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
       },
       diaSemana: {
         type: DataTypes.ENUM(Object.values(diaSemana)),
-        // allowNull: false
       },
       fechaDeInicio: {
         type: DataTypes.DATEONLY,
@@ -25,6 +24,14 @@ module.exports = (sequelize) => {
       },
       horaFin: {
         type: DataTypes.TIME,
+      },
+      paciente_id: {
+        type: DataTypes.INTEGER,
+      },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
     },
     {

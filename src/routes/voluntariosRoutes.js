@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Op } = require('../db/db');
+const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Seguimiento, Grupo, Op } = require('../db/db');
 const { validarVoluntario } = require('../schemas/voluntario');
 const { validarDisponibilidad } = require('../schemas/disponibilidad');
 
@@ -9,7 +9,7 @@ router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const voluntario = await Voluntario.findByPk(id, {
-      include: [ Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones],
+      include: [ Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Seguimiento, Grupo],
     }, 
     
     );
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   try {
     const result = validarVoluntario(req.body);
     // console.log(req.body);
-    const disponibilidades = req.body.Disponibilidades[0]
+    // const disponibilidades = req.body.Disponibilidades[0]
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
@@ -37,18 +37,18 @@ router.post('/', async (req, res) => {
     // console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
 
     // Luego, usar el voluntario_id para crear la disponibilidad
-    const result2 = validarDisponibilidad(disponibilidades);
+    // const result2 = validarDisponibilidad(disponibilidades);
 
-    const nuevaDisponibilidad = {
-      voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
-      ...result2.data,
-    };
+    // const nuevaDisponibilidad = {
+    //   voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
+    //   ...result2.data,
+    // };
 
-    const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
+    // const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
 
-    await Disponibilidades.create(disponibilidadValidada.data);
+    // await Disponibilidades.create(disponibilidadValidada.data);
 
-    res.status(200).json({ nuevoVoluntario, nuevaDisponibilidad });
+    res.status(200).json({ nuevoVoluntario });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -75,7 +75,7 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const voluntarioAActualizar = await Voluntario.findByPk(id);
 
     const result = validarVoluntario(req.body);
@@ -93,30 +93,33 @@ router.put('/:id', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana } = req.query;
+    const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana, activo } = req.query;
     
     const filter = {};
     
     if (nombre) {
-      filter.nombre = { [Op.iLike]: `%${nombre}%` };
+      filter.nombre = { [Op.substring]: `%${nombre}%` };
     }
     if (apellido) {
-      filter.apellido = { [Op.iLike]: `%${apellido}%` };
+      filter.apellido = { [Op.substring]: `%${apellido}%` };
     }
     if (localidad) {
-      filter.localidad = { [Op.iLike]: `%${localidad}%` };
+      filter.localidad = { [Op.substring]: `%${localidad}%` };
     }
     if (profesion_oficio_ocupacion) {
-      filter.profesion_oficio_ocupacion = { [Op.iLike]: `%${profesion_oficio_ocupacion}%` };
+      filter.profesion_oficio_ocupacion = { [Op.substring]: `%${profesion_oficio_ocupacion}%` };
     }
     if (hobbies_habilidades) {
-      filter.hobbies_habilidades = { [Op.iLike]: `%${hobbies_habilidades}%` };
+      filter.hobbies_habilidades = { [Op.substring]: `%${hobbies_habilidades}%` };
     }
     if (tieneAuto !== undefined) {
       filter.tieneAuto = tieneAuto === 'true';
     }
     if (experienciaCP !== undefined) {
       filter.experienciaCP = experienciaCP === 'true';
+    }
+    if (activo !== undefined) {
+      filter.activo = activo === 'true';
     }
     
     let voluntarios;
@@ -135,6 +138,7 @@ router.get('/', async (req, res) => {
           }
         ]
       });
+      
     } else {
       voluntarios = await Voluntario.findAll({
         where: filter,

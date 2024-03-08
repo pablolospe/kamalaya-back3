@@ -1,11 +1,12 @@
 const { DataTypes } = require('sequelize');
 
+// Tabla intermedia entre Seguimiento (de cada paciente) y Voluntario, los voluntarios participantes
 
 module.exports = (sequelize) => {
-  const GrupoVoluntario = sequelize.define(
-    'GrupoVoluntario',
+  const SeguimientoVoluntario = sequelize.define(
+    'SeguimientoVoluntario',
     {
-      grupo_id: {
+      seguimiento_id: {
         type: DataTypes.INTEGER,
       },
       voluntario_id: {
@@ -17,5 +18,5 @@ module.exports = (sequelize) => {
     }
   );
 
-  return GrupoVoluntario;
+  return SeguimientoVoluntario;
 };

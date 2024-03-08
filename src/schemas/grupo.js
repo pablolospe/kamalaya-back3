@@ -9,6 +9,7 @@ const grupoSchema = z.object({
   horaFin: z.string(),
   paciente_id: z.number(),
   voluntario_id: z.array(z.number()),
+  activo: z.boolean(),
 });
 
 function validarGrupo(object) {
@@ -16,18 +17,3 @@ function validarGrupo(object) {
 }
 
 module.exports = { validarGrupo };
-
-
-// diaSemana: {
-//   type: DataTypes.ENUM(Object.values(diaSemana)),
-//   // allowNull: false
-// },
-// fechaDeInicio: {
-//   type: DataTypes.DATEONLY,
-// },
-// horaInicio: {
-//   type: DataTypes.TIME,
-// },
-// horaFin: {
-//   type: DataTypes.TIME,
-// },

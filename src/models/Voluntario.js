@@ -5,6 +5,7 @@ const generos = {
   F:'F',
   OTRO:"otro"
 }
+
 module.exports = (sequelize) => {
 
   sequelize.define(
@@ -50,6 +51,9 @@ module.exports = (sequelize) => {
       numero: {
         type: DataTypes.STRING,
       },
+      departamento: {
+        type: DataTypes.STRING,
+      },
       localidad: {
         type: DataTypes.STRING,
       },
@@ -91,6 +95,10 @@ module.exports = (sequelize) => {
       },
       experienciaCP: {
         type: DataTypes.BOOLEAN,
+      },
+      activo: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
     },
     // {

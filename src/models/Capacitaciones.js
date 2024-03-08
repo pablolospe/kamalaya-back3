@@ -2,24 +2,21 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define(
-    'Vacaciones',
+    'Capacitaciones',
     {
-      vacaciones_id: {
+      capacitacion_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      fechaInicio: {
-        type: DataTypes.DATEONLY,
-        // allowNull: false
-      },
-      fechaFin: {
-        type: DataTypes.DATEONLY,
-        // allowNull: false
-      },
-      detalles: {
+      nombre: {
         type: DataTypes.STRING,
-        // allowNull: false
+      },
+      descripcion: {
+        type: DataTypes.STRING,
+      },
+      fecha: {
+        type: DataTypes.DATEONLY,
       },
     },
     {

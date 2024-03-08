@@ -7,10 +7,8 @@ const router = Router();
 // Ruta para crear un grupo y asociar un paciente existente
 router.post('/', async (req, res) => {
   try {
-    const { diaSemana, fechaDeInicio, horaInicio, horaFin, paciente_id, voluntario_id, descripcion } = req.body;
+    const { paciente_id, voluntario_id } = req.body;
     const result = validarGrupo(req.body)
-    // const { diaSemana, fechaDeInicio, horaInicio, horaFin, paciente_id, voluntario_id, descripcion } = data.data;
-    // console.log(data);
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
@@ -18,7 +16,7 @@ router.post('/', async (req, res) => {
 
     const nuevoGrupo = {
       ...result,
-    };    
+    };
 
     const pacienteExistente = await Paciente.findByPk(paciente_id);
 
@@ -27,23 +25,13 @@ router.post('/', async (req, res) => {
     }
 
     const grupo = await Grupo.create(nuevoGrupo.data)
-    
-    // const nuevoGrupo = await Grupo.create({
-    //   diaSemana, 
-    //   fechaDeInicio,
-    //   horaInicio,
-    //   horaFin,
-    //   paciente_id,
-    //   descripcion
-    // });
-    // await nuevoGrupo.addPaciente(pacienteExistente);
 
     if (voluntario_id && Array.isArray(voluntario_id)) {
       for (const idVoluntario of voluntario_id) {
         const voluntario = await Voluntario.findByPk(idVoluntario);
         if (voluntario) {
           // Crea una entrada en la tabla GrupoVoluntario para asociar el grupo y el voluntario
-          console.log('aidi'+grupo.grupo_id);
+          // console.log('aidi'+grupo.grupo_id);
           await GrupoVoluntario.create({
             grupo_id: grupo.grupo_id,
             voluntario_id: voluntario.voluntario_id,
@@ -51,8 +39,6 @@ router.post('/', async (req, res) => {
         }
       }
     }
-
-
     return res.status(201).json(nuevoGrupo);
   } catch (error) {
     console.error(error);
@@ -60,82 +46,91 @@ router.post('/', async (req, res) => {
   }
 });
 
-
-// router.post('/', async (req, res) => {
-//   try {
-//     const result = validarGrupo(req.body);
-// console.log(result);
-//     if (result.error) {
-//       return res.status(400).json({ error: JSON.parse(result.error) });
-//     }
-
-//     const nuevoGrupo = {
-//       ...result,
-//     };
-
-//     console.log(nuevoGrupo);
-
-//     // Utiliza await para esperar a que la operación de creación se complete
-//     const grupoCreado = await Grupo.create(nuevoGrupo.data);
-
-//     // Responde al cliente después de que se haya creado el grupo
-//     res.status(200).json({ nuevoGrupo: grupoCreado });
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
-
-
 router.get('/', async (req, res) => {
   try {
     const grupos = await Grupo.findAll({
-      include: [Paciente, Voluntario]
+      include: [Paciente, Voluntario ]
     });
     res.status(200).json(grupos);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json(error);
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const grupo = await Grupo.findByPk(id, {
+      include: [Paciente, Voluntario ]
+    });
+    res.status(200).json(grupo);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json(error);
+  }
+});
+
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const grupoABorrar = await Grupo.findByPk(id);
+    if (!grupoABorrar) res.status(200).send('Grupo no encontrado');
+    else {
+      await grupoABorrar.destroy();
+      res
+        .status(200)
+        .json(
+          `Grupo ${grupoABorrar.grupo_id} borrado/a con éxito.`
+        );
+    }
+  } catch (error) {
+    res.status(404).json(error.message);
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data: result, error } = validarGrupo(req.body)
+    const { paciente_id, voluntario_id } = req.body;
+    // console.log(result);
+    if (error) {
+      return res.status(400).json({ error: error.message }); 
+    }
+
+    const pacienteExistente = await Paciente.findByPk(paciente_id);
+
+    if (!pacienteExistente) {
+      return res.status(404).json({ error: 'Paciente no encontrado' });
+    }
+
+    const grupoAEditar = await Grupo.findByPk(id);
+    await grupoAEditar.update(result);
+
+    await GrupoVoluntario.destroy({
+      where: {
+        grupo_id: id
+      }
+    });
+
+    if (voluntario_id && Array.isArray(voluntario_id)) {
+      for (const idVoluntario of voluntario_id) {
+        const voluntario = await Voluntario.findByPk(idVoluntario);
+        if (!voluntario) {
+          return res.status(404).json({ error: 'Voluntario no encontrado para el id: ' + idVoluntario });
+        }
+        await GrupoVoluntario.create({
+          grupo_id: id,
+          voluntario_id: voluntario.voluntario_id,
+        });
+      }
+    }
+    res.status(200).json(grupoAEditar);
   } catch (error) {
     res.status(404).json(error);
   }
 });
-    
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const paciente = await Paciente.findByPk(id);
-//     res.status(200).json(paciente);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
-
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const pacienteABorrar = await Paciente.findByPk(id);
-//     if (!pacienteABorrar) res.status(200).send('Voluntario no encontrado');
-//     else {
-//       await pacienteABorrar.destroy();
-//       res
-//         .status(200)
-//         .json(
-//           `Paciente ${pacienteABorrar.nombre} ${pacienteABorrar.apellido} (${pacienteABorrar.email}) borrado/a con éxito.`
-//         );
-//     }
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
-
-// router.put('/:id', async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const data = req.body;
-//     const usuario = await Usuario.findByPk(id);
-
-//     await usuario.update(data);
-//     res.status(200).json(usuario);
-//   } catch (error) {
-//     res.status(404).json(error);
-//   }
-// });
 
 module.exports = router;
