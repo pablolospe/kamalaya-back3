@@ -20,7 +20,7 @@ let sequelize = process.env.NODE_ENV === 'production'
     },
     dialectOptions: {
       ssl: {
-        require: true,
+        require: false,
         rejectUnauthorized: false,
       },
       keepAlive: true,
