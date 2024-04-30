@@ -10,9 +10,6 @@ module.exports = (sequelize) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      // usuario_id: {
-      //   type: DataTypes.INTEGER,
-      // },
       diaSemana: {
         type: DataTypes.ENUM(Object.values(diaSemana)),
         // allowNull: false
@@ -25,6 +22,9 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         // allowNull: false
       },
+      // tipoDeAcomp: {
+      //   type: DataTypes.ENUM("presencial", "telefonico", "admisiones"),
+      // },
     },
     {
       timestamps: false,
