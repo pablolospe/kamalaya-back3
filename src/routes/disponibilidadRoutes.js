@@ -7,7 +7,6 @@ const router = Router();
 router.post('/', async (req, res) => {
   try {
     const result = validarDisponibilidad(req.body);
-    // console.log(result.error);
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
