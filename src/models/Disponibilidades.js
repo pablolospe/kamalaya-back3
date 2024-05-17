@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const {diaSemana} = require('../utils/diaSemana')
+const { diaSemana } = require('../utils/diaSemana')
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -21,6 +21,15 @@ module.exports = (sequelize) => {
       horaFin: {
         type: DataTypes.STRING,
         // allowNull: false
+      },
+      acompTelefonico: {
+        type: DataTypes.BOOLEAN
+      },
+      acompPresencial: {
+        type: DataTypes.BOOLEAN
+      },
+      admisiones: {
+        type: DataTypes.BOOLEAN
       },
       // tipoDeAcomp: {
       //   type: DataTypes.ENUM("presencial", "telefonico", "admisiones"),
