@@ -2,10 +2,11 @@ const { Router } = require('express');
 const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Seguimiento, Grupo, Op } = require('../db/db');
 const { validarVoluntario } = require('../schemas/voluntario');
 const { validarDisponibilidad } = require('../schemas/disponibilidad');
+const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', userExtractor, async (req, res) => {
   try {
     const { id } = req.params;
     const voluntario = await Voluntario.findByPk(id, {
@@ -91,7 +92,9 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
+  const token = req.headers['authorization'];
+  console.log(token);
   try {
     const { nombre, apellido, localidad, tieneAuto, experienciaCP, profesion_oficio_ocupacion, hobbies_habilidades, diaSemana, activo } = req.query;
     

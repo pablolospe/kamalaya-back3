@@ -3,8 +3,11 @@ const bcrypt = require('bcrypt');
 const { User } = require('../db/db');
 const router = Router();
 const { validarSignin } = require('../schemas/signin');
+const userExtractor = require('../middleware/userExtractor');
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
+  const token = req.headers['authorization'];
+  console.log(token);
   try {
     const users = await User.findAll();
     res.status(200).json(users);
@@ -24,7 +27,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-  console.log('caca');
+  // console.log('caca');
   try {
     const { id } = req.params;
 
@@ -47,5 +50,25 @@ router.put('/:id', async (req, res) => {
     res.status(404).json(error);
   }
 });
+
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const usuarioABorrar = await User.findByPk(id);
+    if (!usuarioABorrar) res.status(200).send('Usuario no encontrado');
+    else {
+      await usuarioABorrar.destroy();
+      res
+        .status(200)
+        .json(
+          `Paciente ${usuarioABorrar.nombre} ${usuarioABorrar.apellido} (${usuarioABorrar.email}) borrado/a con éxito.`
+        );
+    }
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
+
 
 module.exports = router;
