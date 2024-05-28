@@ -6,7 +6,7 @@ const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
-router.get('/:id', userExtractor, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const voluntario = await Voluntario.findByPk(id, {
@@ -92,7 +92,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.get('/', userExtractor, async (req, res) => {
+router.get('/', async (req, res) => {
   const token = req.headers['authorization'];
   console.log(token);
   try {
