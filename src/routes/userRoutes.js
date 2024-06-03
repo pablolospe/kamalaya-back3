@@ -56,15 +56,15 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/', async (req, res) => {
   try {
-    const { id } = req.params;
+    // const { id } = req.params;
+    const  result  = validarPass(req.body);
+    const { user_id, oldPassword, newPassword } = result.data;
 
-    const userToUpdate = await User.findByPk(id);
-    const result = validarPass(req.body);
-    console.log(result);    
+    const userToUpdate = await User.findByPk(user_id);
     
-    const { oldPassword, newPassword } = result.data;
+    // console.log(userToUpdate);    
     
     const passwordMatch = await bcrypt.compare(oldPassword, userToUpdate.hashPassword);
     if (!passwordMatch) {
