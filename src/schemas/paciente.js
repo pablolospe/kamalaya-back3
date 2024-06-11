@@ -9,12 +9,18 @@ const pacienteSchema = z.object({
   telefonoCuidadorPrincipal: z.string(),
   insumosPrestados: z.string(),
   
-  nombre: z.string({ invalid_type_error: 'Nombre debe ser un string', }),
-  apellido: z.string(),
+  nombre: z.string({
+    invalid_type_error: 'El nombre debe ser un string',
+    required_error: 'El nombre es requerido'
+  }).toLowerCase(),
+  apellido: z.string({
+    invalid_type_error: 'El apellido debe ser un string',
+    required_error: 'El apellido es requerido'
+  }).toLowerCase(),
   genero: z.enum(['','M', 'F', 'otro']),
   fechaDeNacimiento: z.coerce.date(),
   dni: z.string(),
-  email: z.string({ required_error: 'El email es requerido' }),
+  email: z.string(),
   telefono: z.string(),
   telefono2: z.string(),
   lat: z.string(),
@@ -45,7 +51,6 @@ const pacienteSchema = z.object({
   pacienteConocePronostico: z.enum(["","Si","No","Falta preguntar"]),
   familiaConoceDiagnostico: z.enum(["","Si","No","Falta preguntar"]),
   familiaConocePronostico: z.enum(["","Si","No","Falta preguntar"]),
-
 
   problemasActuales: z.string(),
   recursosDisponibles: z.string(),
