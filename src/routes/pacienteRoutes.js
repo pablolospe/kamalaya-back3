@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Paciente, Voluntario, Seguimiento, Grupo, Op } = require('../db/db');
 const { validarPaciente } = require('../schemas/paciente');
+const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   try {
     const { nombre, apellido, localidad, orderBy='nombre' } = req.query;
 

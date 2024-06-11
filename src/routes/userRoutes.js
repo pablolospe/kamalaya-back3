@@ -6,7 +6,7 @@ const { validarSignin } = require('../schemas/signin');
 const { validarPass } = require('../schemas/pass');
 const userExtractor = require('../middleware/userExtractor');
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   const token = req.headers['authorization'];
   // console.log(token);
   try {

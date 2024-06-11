@@ -1,10 +1,37 @@
 const { Router } = require('express');
 const { Voluntario, Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Seguimiento, Grupo, Op } = require('../db/db');
 const { validarVoluntario } = require('../schemas/voluntario');
-const { validarDisponibilidad } = require('../schemas/disponibilidad');
 const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
+
+// router.get('/:id', async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const voluntario = await Voluntario.findByPk(id, {
+//       include: [Disponibilidades, AntecedenteDeAcompaniamiento, AntecedentePatologico, Vacaciones, Seguimiento, Grupo],
+//     });
+
+//     if (!voluntario) {
+//       return res.status(404).json({ error: 'Voluntario no encontrado' });
+//     }
+
+//     const formatToISO = (date) => (date ? new Date(date).toISOString() : null);
+
+
+//     const formattedVoluntario = {
+//       ...voluntario.toJSON(),
+//       fechaDeNacimiento: formatToISO(voluntario.fechaDeNacimiento),
+//       fechaAlta: formatToISO(voluntario.fechaAlta),
+//       fechaBaja: formatToISO(voluntario.fechaBaja),
+//     };
+
+
+//     res.status(200).json(formattedVoluntario);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Error al obtener el voluntario' });
+//   }
+// });
 
 router.get('/:id', async (req, res) => {
   try {
@@ -23,8 +50,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const result = validarVoluntario(req.body);
-    // console.log(req.body);
-    // const disponibilidades = req.body.Disponibilidades[0]
 
     if (result.error) {
       return res.status(400).json({ error: JSON.parse(result.error) });
@@ -33,23 +58,10 @@ router.post('/', async (req, res) => {
     const nuevoVoluntario = {
       ...result,
     };    
-    // Crear el voluntario y obtener su ID
+   
     const voluntarioCreado = await Voluntario.create(nuevoVoluntario.data);
-    // console.log('voluntarioCreado.voluntario_id: '+ voluntarioCreado.voluntario_id);
-
-    // Luego, usar el voluntario_id para crear la disponibilidad
-    // const result2 = validarDisponibilidad(disponibilidades);
-
-    // const nuevaDisponibilidad = {
-    //   voluntario_id: Number(voluntarioCreado.voluntario_id), // Asignar el voluntario_id
-    //   ...result2.data,
-    // };
-
-    // const disponibilidadValidada = validarDisponibilidad(nuevaDisponibilidad);
-
-    // await Disponibilidades.create(disponibilidadValidada.data);
-
-    res.status(200).json({ nuevoVoluntario });
+   
+    res.status(200).json({ voluntarioCreado });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -92,7 +104,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   const token = req.headers['authorization'];
   console.log(token);
   try {
