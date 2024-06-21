@@ -104,7 +104,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   const token = req.headers['authorization'];
   console.log(token);
   try {
