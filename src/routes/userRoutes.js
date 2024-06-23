@@ -84,7 +84,7 @@ router.patch('/', async (req, res) => {
 });
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', userExtractor, async (req, res) => {
   const { id } = req.params;
   try {
     const usuarioABorrar = await User.findByPk(id);
