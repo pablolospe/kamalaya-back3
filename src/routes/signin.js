@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../db/db');
 const router = Router();
 const { validarSignin } = require('../schemas/signin');
+const userExtractor = require('../middleware/userExtractor');
 
 router.post('/', async (req, res) => {
   const result = validarSignin(req.body);

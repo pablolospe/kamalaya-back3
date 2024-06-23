@@ -8,8 +8,8 @@ module.exports = (req, res, next) => {
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
     token = authorization.substring(7);
   }
-  console.log(authorization);
-  console.log(token);
+  // console.log(authorization);
+  // console.log(token);
 
   const decodedToken = jwt.verify(token, process.env.SECRET);
 
