@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Seguimiento, Voluntario, SeguimientoVoluntario, Paciente } = require('../db/db');
 const { validarSeguimiento } = require('../schemas/seguimiento');
+const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
@@ -42,7 +43,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   try {
     const seguimientos = await Seguimiento.findAll();
     res.status(200).json(seguimientos);
