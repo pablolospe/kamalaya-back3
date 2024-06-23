@@ -56,7 +56,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.patch('/', async (req, res) => {
+router.patch('/', userExtractor, async (req, res) => {
   try {
 
     const result = validarPass(req.body);
