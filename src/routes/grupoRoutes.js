@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { Voluntario, Paciente, Grupo, GrupoVoluntario } = require('../db/db');
-const { validarGrupo } = require('../schemas/grupo')
+const { validarGrupo } = require('../schemas/grupo');
+const userExtractor = require('../middleware/userExtractor');
 
 const router = Router();
 
@@ -46,7 +47,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', userExtractor, async (req, res) => {
   try {
     const grupos = await Grupo.findAll({
       include: [Paciente, Voluntario ]

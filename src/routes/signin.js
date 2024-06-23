@@ -9,13 +9,11 @@ router.post('/', async (req, res) => {
   if (result.error) {
     // Extraer los mensajes de error de Zod
     const errorMessages = result.error.errors.map((error) => error.message);
-
     // Enviar los mensajes de error al cliente con un código de estado 400
     return res.status(400).json({ errors: errorMessages });
   }
 
   const { email, password } = result.data;
-
 
   try {
     const existingUser = await User.findOne({ where: { email } });

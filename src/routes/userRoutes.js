@@ -7,8 +7,8 @@ const { validarPass } = require('../schemas/pass');
 const userExtractor = require('../middleware/userExtractor');
 
 router.get('/', userExtractor, async (req, res) => {
-  const token = req.headers['authorization'];
-  // console.log(token);
+  // const token = req.headers['authorization'];
+
   try {
     const users = await User.findAll();
     res.status(200).json(users);
@@ -17,7 +17,7 @@ router.get('/', userExtractor, async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', userExtractor, async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -27,16 +27,16 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', userExtractor, async (req, res) => {
   try {
     const { id } = req.params;
 
     const userToUpdate = await User.findByPk(id);
-    
+
     const result = validarSignin(req.body);
-    
+
     const { password } = result.data;
-    
+
     const passwordMatch = await bcrypt.compare(password, userToUpdate.hashPassword);
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid password' });
@@ -58,14 +58,12 @@ router.put('/:id', async (req, res) => {
 
 router.patch('/', async (req, res) => {
   try {
-    // const { id } = req.params;
-    const  result  = validarPass(req.body);
+
+    const result = validarPass(req.body);
     const { user_id, oldPassword, newPassword } = result.data;
 
     const userToUpdate = await User.findByPk(user_id);
-    
-    // console.log(userToUpdate);    
-    
+
     const passwordMatch = await bcrypt.compare(oldPassword, userToUpdate.hashPassword);
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid password' });

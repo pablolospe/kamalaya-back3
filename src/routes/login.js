@@ -5,8 +5,6 @@ const { generateToken } = require('../utils/generateToken');
 const { User } = require('../db/db.js');
 const { validarLogin } = require('../schemas/login.js');
 
-// const userExtractor = require('../middleware/userExtractor.js');
-
 const router = Router();
 
 router.post('/', async (req, res) => {
