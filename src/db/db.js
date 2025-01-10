@@ -5,68 +5,68 @@ const path = require('path');
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
 
-const sequelize = new Sequelize(
+// const sequelize = new Sequelize(
 
-  DB_NAME,
+//   DB_NAME,
  
-  DB_USER,
+//   DB_USER,
  
-  DB_PASSWORD,
+//   DB_PASSWORD,
  
-  {
+//   {
  
-   host: DB_HOST,
+//    host: DB_HOST,
  
-   dialect: "mysql",
+//    dialect: "mysql",
 
-   port: DB_PORT,
+//    port: DB_PORT,
  
-  }
+//   }
  
- );
+//  );
 
- sequelize
+//  sequelize
 
- .authenticate()
+//  .authenticate()
 
- .then(() => {
+//  .then(() => {
 
-  console.log("DATABASE CONNECTED");
+//   console.log("DATABASE CONNECTED");
 
- })
+//  })
 
- .catch((err) => {
+//  .catch((err) => {
 
-  console.log(err);
+//   console.log(err);
 
- });
+//  });
 
-// let sequelize = process.env.NODE_ENV === 'production'
-//   ? new Sequelize({
-//     database: DB_NAME,
-//     dialect: 'mysql',
-//     host: DB_HOST,
-//     port: DB_PORT,
-//     username: DB_USER,
-//     password: DB_PASSWORD,
-//     pool: {
-//       max: 3,
-//       min: 1,
-//       idle: 10000,
-//     },
-//     dialectOptions: {
-//       ssl: {
-//         require: true,
-//         rejectUnauthorized: false,
-//       },
-//       keepAlive: true,
-//     },
-//     // ssl: true,
+let sequelize = process.env.NODE_ENV === 'production'
+  ? new Sequelize({
+    database: DB_NAME,
+    dialect: 'mysql',
+    host: DB_HOST,
+    port: DB_PORT,
+    username: DB_USER,
+    password: DB_PASSWORD,
+    pool: {
+      max: 3,
+      min: 1,
+      idle: 10000,
+    },
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+      keepAlive: true,
+    },
+    // ssl: true,
     
-//   }) : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require`, {
-//     logging: false,
-//     native: false,
-//   });
+  }) : new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?sslmode=require`, {
+    logging: false,
+    native: false,
+  });
 
 const basename = path.basename(__filename);
 const modelDefiners = [];
